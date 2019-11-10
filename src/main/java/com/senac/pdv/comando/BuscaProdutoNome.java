@@ -7,6 +7,7 @@ import com.senac.pdv.modelo.Produto;
 
 public class BuscaProdutoNome implements Comando {
 	
+        @Override
 	public void execute(Scanner scanner) {
 		ProdutoDAO DAO = new ProdutoDAO();
 		
@@ -15,8 +16,8 @@ public class BuscaProdutoNome implements Comando {
      	String nome = scanner.nextLine(); 
      	
      	for(Produto prodto : DAO.buscaPorNome(nome)) {
-     		System.out.println(prodto);
-     	}  
+            System.out.println(prodto);
+     }
      }
 		
 }

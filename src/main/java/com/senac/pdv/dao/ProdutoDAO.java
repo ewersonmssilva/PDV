@@ -68,7 +68,7 @@ public class ProdutoDAO {
 					.prepareStatement(sql)
 					.executeQuery();
 
-			List<Produto> produtos = new ArrayList<Produto>();
+			List<Produto> produtos = new ArrayList<>();
 			while(rs.next()) {
 				Produto produto = new Produto();
 				produto.setId(rs.getLong(1));
@@ -92,7 +92,7 @@ public class ProdutoDAO {
 			ps.setString(1, "%"+nome+"%");
 			ResultSet rs = ps.executeQuery(); 
 
-			List<Produto> produtos = new ArrayList<Produto>();
+			List<Produto> produtos = new ArrayList<>();
 			while(rs.next()) {
 				Produto produto = new Produto();
 				produto.setId(rs.getLong(1));

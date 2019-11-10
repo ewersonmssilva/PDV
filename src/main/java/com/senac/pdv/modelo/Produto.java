@@ -47,7 +47,4 @@ public class Produto {
 				.append(String.format("\nQuantidade: %s", getQuantidade()))
 				.toString();
 	}
-	
-	
-
 }

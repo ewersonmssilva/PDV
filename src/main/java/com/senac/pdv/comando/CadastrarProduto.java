@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 public class CadastrarProduto implements Comando {
 	
+        @Override
 	public void execute (Scanner scanner) {
 		ProdutoDAO DAO = new ProdutoDAO();
 		Produto produto = new Produto();

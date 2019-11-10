@@ -18,14 +18,16 @@ public class PDVTeste {
             System.out.println("\n 1 - Inserir");
             System.out.println("\n 2 - Atualizar");
             System.out.println("\n 3 - Remover");
-            System.out.println("\n 4 - Buscar por nome");
-            System.out.println("\n 5 - Buscar por preço");
-            System.out.println("\n 6 - Listar os produtos");
+            System.out.println("\n 4 - Buscar por codigo");
+            System.out.println("\n 5 - Buscar por nome");
+            System.out.println("\n 6 - Buscar por preço");
+            System.out.println("\n 7 - Listar os produtos");
+            System.out.println("\n 8 - Venda de produtos");
             System.out.println("\n 0 - Sair");
             opcao = scanner.nextInt();
             mapaComandos.get(opcao).execute(scanner);
 
-        } while (opcao <= 6);
+        } while (opcao <= 8);
 	}
 
 	private static Map<Integer, Comando> getCommandos() {
@@ -34,9 +36,11 @@ public class PDVTeste {
         comandos.put(1, new CadastrarProduto());
         comandos.put(2, new AtualizarProduto());
         comandos.put(3, new RemoverProduto());
-        comandos.put(4, new BuscaProdutoNome());
-        comandos.put(5, new BuscaProdutoPreco());
-        comandos.put(6, new ListarProdutos());
+        comandos.put(4, new BuscaProdutoCodigo());
+        comandos.put(5, new BuscaProdutoNome());
+        comandos.put(6, new BuscaProdutoPreco());
+        comandos.put(7, new ListarProdutos());
+        comandos.put(8, new VendaProduto());
         return comandos;
     }
 

@@ -7,6 +7,7 @@ import java.util.Scanner;
 
 public class BuscaProdutoPreco implements Comando{
 	
+        @Override
 	public void execute (Scanner scanner) {
 		ProdutoDAO DAO = new ProdutoDAO();
 		

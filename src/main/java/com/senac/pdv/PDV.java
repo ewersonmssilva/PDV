@@ -23,7 +23,8 @@ public class PDV {
 		d5.setProximo(d0);
 		
 		Venda venda = new Venda();
-		
+                
+
 		Produto p1 = new Produto();
 		p1.setNome("Desktop");
 		p1.setValor(3100.00);
