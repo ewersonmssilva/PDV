@@ -135,9 +135,9 @@ public class ProdutoDAO {
 		try (Connection conn = ConnectionPDVFactory.getConnection()) {
 			String sql;
 			if(opcao) {
-				sql = "SELECT * FROM PRODUTO WHERE PRECO > ?  ";
+				sql = "SELECT * FROM produto WHERE preco > ?  ";
 			} else {
-				sql = "SELECT * FROM PRODUTO WHERE PRECO < ? ";
+				sql = "SELECT * FROM produto WHERE preco < ? ";
 			}
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setDouble(1, preco);
