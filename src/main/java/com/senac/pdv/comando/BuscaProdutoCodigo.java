@@ -11,7 +11,7 @@ public class BuscaProdutoCodigo implements Comando{
 	public void execute(Scanner scanner) {
 		ProdutoDAO DAO = new ProdutoDAO();
 		
-		System.out.println("Digite o código do produto: ");
+		System.out.println("Digite o codigo do produto: ");
 		scanner.nextLine();     	
             int codigo = scanner.nextInt();
         
