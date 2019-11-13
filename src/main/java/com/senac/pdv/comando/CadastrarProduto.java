@@ -13,7 +13,7 @@ public class CadastrarProduto implements Comando {
 		
 	 	System.out.println("Digite o ID do produto: ");
 	 	scanner.nextLine();
-	 	produto.setId(scanner.nextLong());
+	 	produto.setId(scanner.nextInt());
 	 	
 	 	System.out.println("Digite o nome do produto: ");
 	 	scanner.nextLine();

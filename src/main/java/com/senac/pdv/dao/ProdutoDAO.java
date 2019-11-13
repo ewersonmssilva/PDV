@@ -14,14 +14,14 @@ public class ProdutoDAO {
 	
 	public void inserir(Produto produto) {
 		try (Connection conn = ConnectionPDVFactory.getConnection()) {
-			String sql = "INSERT INTO produto (codigo, nome, preco, quantidade)" +
-							"VALUES (?, ?, ?, ?)";
+			String sql = "INSERT INTO produto (nome, preco, quantidade)" +
+							"VALUES (?, ?, ?)";
 
 			PreparedStatement ps = conn.prepareStatement(sql); // esta pedindo para preparar a conexão
-			ps.setLong(1, produto.getId()); // vai pegar o primeiro parametro ? e colocar o id por isso setInt
-			ps.setString(2, produto.getNome());
-			ps.setDouble(3, produto.getValor());
-			ps.setDouble(4, produto.getQuantidade());
+			//ps.setLong(1, produto.getId()); // vai pegar o primeiro parametro ? e colocar o id por isso setInt
+			ps.setString(1, produto.getNome());
+			ps.setDouble(2, produto.getValor());
+			ps.setDouble(3, produto.getQuantidade());
 
 			ps.executeUpdate();
 		} catch (SQLException e) {
@@ -40,8 +40,8 @@ public class ProdutoDAO {
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, produto.getNome());
 			ps.setDouble(2, produto.getValor());
-			ps.setDouble(3, produto.getQuantidade());
-			ps.setLong(4, produto.getId());
+			ps.setInt(3, produto.getQuantidade());
+			ps.setInt(4, produto.getId());
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
@@ -71,7 +71,7 @@ public class ProdutoDAO {
 			List<Produto> produtos = new ArrayList<>();
 			while(rs.next()) {
 				Produto produto = new Produto();
-				produto.setId(rs.getLong(1));
+				produto.setId(rs.getInt(1));
 				produto.setNome(rs.getString(2));
 				produto.setValor(rs.getDouble(3));
 				produto.setQuantidade(rs.getInt(4));
@@ -95,7 +95,7 @@ public class ProdutoDAO {
 			List<Produto> produtos = new ArrayList<>();
 			while(rs.next()) {
 				Produto produto = new Produto();
-				produto.setId(rs.getLong(1));
+				produto.setId(rs.getInt(1));
 				produto.setNome(rs.getString(2));
 				produto.setValor(rs.getDouble(3));
 				produto.setQuantidade(rs.getInt(4));
@@ -119,7 +119,7 @@ public class ProdutoDAO {
 
 			Produto produto = new Produto();
 			while(rs.next()) {
-				produto.setId(rs.getLong(1));
+				produto.setId(rs.getInt(1));
 				produto.setNome(rs.getString(2));
 				produto.setValor(rs.getDouble(3));
 				produto.setQuantidade(rs.getInt(4));
@@ -146,7 +146,7 @@ public class ProdutoDAO {
 			List<Produto> produtos = new ArrayList<>();
 			while(rs.next()) {
 				Produto p = new Produto();
-				p.setId(rs.getLong(1));
+				p.setId(rs.getInt(1));
 				p.setNome(rs.getString(2));
 				p.setValor(rs.getDouble(3));
 				p.setQuantidade(rs.getInt(4));
