@@ -73,17 +73,15 @@ public class pdvUI extends javax.swing.JFrame {
         jRadioButton2 = new javax.swing.JRadioButton();
         jRadioButton3 = new javax.swing.JRadioButton();
         jRadioButton4 = new javax.swing.JRadioButton();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
-        jLabel6 = new javax.swing.JLabel();
+        jTextFieldlVendasValor = new javax.swing.JTextField();
+        jTextFieldlVendasImpostos = new javax.swing.JTextField();
+        jTextFieldlVendasDescontos = new javax.swing.JTextField();
+        jTextFieldlVendasTotal = new javax.swing.JTextField();
+        jLabelVendasValor = new javax.swing.JLabel();
+        jLabellVendasImpostos = new javax.swing.JLabel();
+        jLabellVendasDescontos = new javax.swing.JLabel();
+        jLabellVendasTotal = new javax.swing.JLabel();
         jComboBoxVendasNome = new javax.swing.JComboBox<>();
-        jPanelControle = new javax.swing.JPanel();
-        jButton2 = new javax.swing.JButton();
         jPanelBuscas = new javax.swing.JPanel();
         jButtonBuscasPesquisar = new javax.swing.JButton();
         jTextFieldPesquisarProduto = new javax.swing.JTextField();
@@ -98,6 +96,11 @@ public class pdvUI extends javax.swing.JFrame {
         jButtonAtualisarSalvar = new javax.swing.JButton();
         jButtonPesquisarNovo = new javax.swing.JButton();
         jButtonAtualisarRemover = new javax.swing.JButton();
+        jPanelControle = new javax.swing.JPanel();
+        jPanel4 = new javax.swing.JPanel();
+        jButton2 = new javax.swing.JButton();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -176,7 +179,6 @@ public class pdvUI extends javax.swing.JFrame {
                 {null, null, null, null},
                 {null, null, null, null},
                 {null, null, null, null},
-                {null, null, null, null},
                 {null, null, null, null}
             },
             new String [] {
@@ -198,15 +200,19 @@ public class pdvUI extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        jTableVendas.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(jTableVendas);
         if (jTableVendas.getColumnModel().getColumnCount() > 0) {
-            jTableVendas.getColumnModel().getColumn(0).setResizable(false);
-            jTableVendas.getColumnModel().getColumn(0).setPreferredWidth(5);
-            jTableVendas.getColumnModel().getColumn(1).setPreferredWidth(50);
-            jTableVendas.getColumnModel().getColumn(2).setResizable(false);
-            jTableVendas.getColumnModel().getColumn(2).setPreferredWidth(10);
-            jTableVendas.getColumnModel().getColumn(3).setResizable(false);
-            jTableVendas.getColumnModel().getColumn(3).setPreferredWidth(10);
+            jTableVendas.getColumnModel().getColumn(0).setMinWidth(70);
+            jTableVendas.getColumnModel().getColumn(0).setPreferredWidth(70);
+            jTableVendas.getColumnModel().getColumn(0).setMaxWidth(70);
+            jTableVendas.getColumnModel().getColumn(1).setResizable(false);
+            jTableVendas.getColumnModel().getColumn(2).setMinWidth(100);
+            jTableVendas.getColumnModel().getColumn(2).setPreferredWidth(100);
+            jTableVendas.getColumnModel().getColumn(2).setMaxWidth(100);
+            jTableVendas.getColumnModel().getColumn(3).setMinWidth(70);
+            jTableVendas.getColumnModel().getColumn(3).setPreferredWidth(70);
+            jTableVendas.getColumnModel().getColumn(3).setMaxWidth(70);
         }
 
         jButtonVendasAdicionar.setText("Adicionar");
@@ -221,7 +227,8 @@ public class pdvUI extends javax.swing.JFrame {
         jLabel2.setText("Nome:");
 
         buttonGroup1.add(jRadioButton1);
-        jRadioButton1.setText("Desconto Valor");
+        jRadioButton1.setSelected(true);
+        jRadioButton1.setText("Sem Desconto");
         jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jRadioButton1ActionPerformed(evt);
@@ -229,7 +236,7 @@ public class pdvUI extends javax.swing.JFrame {
         });
 
         buttonGroup1.add(jRadioButton2);
-        jRadioButton2.setText("Desconto Quant");
+        jRadioButton2.setText("Desconto Gamer");
         jRadioButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jRadioButton2ActionPerformed(evt);
@@ -237,25 +244,30 @@ public class pdvUI extends javax.swing.JFrame {
         });
 
         buttonGroup1.add(jRadioButton3);
-        jRadioButton3.setText("Desconto X");
-
-        buttonGroup1.add(jRadioButton4);
-        jRadioButton4.setText("Desconto Y");
-
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+        jRadioButton3.setText("Desconto Valor Alto");
+        jRadioButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
+                jRadioButton3ActionPerformed(evt);
             }
         });
 
-        jLabel3.setText("Valor:");
+        buttonGroup1.add(jRadioButton4);
+        jRadioButton4.setText("Desconto Grande Quant.");
 
-        jLabel4.setText("Impostos:");
+        jTextFieldlVendasDescontos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldlVendasDescontosActionPerformed(evt);
+            }
+        });
 
-        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel5.setText("Total:");
+        jLabelVendasValor.setText("Valor:");
 
-        jLabel6.setText("Descontos:");
+        jLabellVendasImpostos.setText("Impostos:");
+
+        jLabellVendasDescontos.setText("Descontos:");
+
+        jLabellVendasTotal.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabellVendasTotal.setText("Total:");
 
         jComboBoxVendasNome.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "<Selecione>" }));
 
@@ -277,29 +289,29 @@ public class pdvUI extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jButtonVendasAdicionar))
                     .addGroup(jPanelVendasLayout.createSequentialGroup()
-                        .addGroup(jPanelVendasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButtonVendasCancelar)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 588, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 588, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(jPanelVendasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanelVendasLayout.createSequentialGroup()
                                 .addGap(26, 26, 26)
                                 .addGroup(jPanelVendasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jLabel5)
-                                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel6)
+                                    .addComponent(jTextFieldlVendasTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jTextFieldlVendasValor, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jTextFieldlVendasDescontos, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabelVendasValor)
+                                    .addComponent(jLabellVendasImpostos)
+                                    .addComponent(jLabellVendasTotal)
+                                    .addComponent(jTextFieldlVendasImpostos, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabellVendasDescontos)
                                     .addComponent(jRadioButton1)
-                                    .addComponent(jRadioButton2)
+                                    .addComponent(jRadioButton3)
                                     .addComponent(jRadioButton4)
-                                    .addComponent(jRadioButton3)))
+                                    .addComponent(jRadioButton2)))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelVendasLayout.createSequentialGroup()
-                                .addGap(82, 82, 82)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButtonVendasCancelar)
+                                .addGap(18, 18, 18)
                                 .addComponent(jButtonVendasFinaliza)))))
-                .addContainerGap(33, Short.MAX_VALUE))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
         jPanelVendasLayout.setVerticalGroup(
             jPanelVendasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -311,34 +323,34 @@ public class pdvUI extends javax.swing.JFrame {
                     .addComponent(jComboBoxVendasNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
                     .addComponent(jLabel1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
-                .addGroup(jPanelVendasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                .addGroup(jPanelVendasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelVendasLayout.createSequentialGroup()
                         .addComponent(jRadioButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jRadioButton2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jRadioButton3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jRadioButton4)
-                        .addGap(27, 27, 27)
-                        .addComponent(jLabel3)
+                        .addGap(50, 50, 50)
+                        .addComponent(jLabelVendasValor)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTextFieldlVendasValor, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel4)
+                        .addComponent(jLabellVendasImpostos)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTextFieldlVendasImpostos, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(4, 4, 4)
-                        .addComponent(jLabel6)
+                        .addComponent(jLabellVendasDescontos)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTextFieldlVendasDescontos, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel5)
+                        .addComponent(jLabellVendasTotal)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jTextFieldlVendasTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 362, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
                 .addGroup(jPanelVendasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonVendasFinaliza)
                     .addComponent(jButtonVendasCancelar))
@@ -347,28 +359,10 @@ public class pdvUI extends javax.swing.JFrame {
 
         jTabbedPane2.addTab("Vendas", jPanelVendas);
 
-        jButton2.setText("jButton2");
-
-        javax.swing.GroupLayout jPanelControleLayout = new javax.swing.GroupLayout(jPanelControle);
-        jPanelControle.setLayout(jPanelControleLayout);
-        jPanelControleLayout.setHorizontalGroup(
-            jPanelControleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelControleLayout.createSequentialGroup()
-                .addGap(196, 196, 196)
-                .addComponent(jButton2)
-                .addContainerGap(513, Short.MAX_VALUE))
-        );
-        jPanelControleLayout.setVerticalGroup(
-            jPanelControleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelControleLayout.createSequentialGroup()
-                .addGap(109, 109, 109)
-                .addComponent(jButton2)
-                .addContainerGap(395, Short.MAX_VALUE))
-        );
-
-        jTabbedPane2.addTab("Controle", jPanelControle);
+        jPanelBuscas.setToolTipText("");
 
         jButtonBuscasPesquisar.setText("Pesquisar");
+        jButtonBuscasPesquisar.setPreferredSize(new java.awt.Dimension(80, 23));
         jButtonBuscasPesquisar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonBuscasPesquisarActionPerformed(evt);
@@ -399,9 +393,10 @@ public class pdvUI extends javax.swing.JFrame {
 
         jLabel9.setText("Preço:");
 
-        jLabel10.setText("Quantidade");
+        jLabel10.setText("Quantidade:");
 
         jButtonPesquisarAtualizar.setText("Atualizar");
+        jButtonPesquisarAtualizar.setPreferredSize(new java.awt.Dimension(80, 23));
         jButtonPesquisarAtualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonPesquisarAtualizarActionPerformed(evt);
@@ -409,6 +404,7 @@ public class pdvUI extends javax.swing.JFrame {
         });
 
         jButtonAtualisarSalvar.setText("Salvar");
+        jButtonAtualisarSalvar.setPreferredSize(new java.awt.Dimension(80, 23));
         jButtonAtualisarSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonAtualisarSalvarActionPerformed(evt);
@@ -416,6 +412,9 @@ public class pdvUI extends javax.swing.JFrame {
         });
 
         jButtonPesquisarNovo.setText("Novo");
+        jButtonPesquisarNovo.setMaximumSize(new java.awt.Dimension(80, 23));
+        jButtonPesquisarNovo.setMinimumSize(new java.awt.Dimension(80, 23));
+        jButtonPesquisarNovo.setPreferredSize(new java.awt.Dimension(80, 23));
         jButtonPesquisarNovo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonPesquisarNovoActionPerformed(evt);
@@ -423,6 +422,7 @@ public class pdvUI extends javax.swing.JFrame {
         });
 
         jButtonAtualisarRemover.setText("Remover");
+        jButtonAtualisarRemover.setPreferredSize(new java.awt.Dimension(80, 23));
         jButtonAtualisarRemover.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonAtualisarRemoverActionPerformed(evt);
@@ -434,72 +434,111 @@ public class pdvUI extends javax.swing.JFrame {
         jPanelBuscasLayout.setHorizontalGroup(
             jPanelBuscasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelBuscasLayout.createSequentialGroup()
-                .addGap(105, 105, 105)
-                .addComponent(jLabel7)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanelBuscasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButtonPesquisarNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBoxPesquisarCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(jPanelBuscasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelBuscasLayout.createSequentialGroup()
-                        .addGroup(jPanelBuscasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanelBuscasLayout.createSequentialGroup()
-                                .addGap(42, 42, 42)
-                                .addComponent(jLabel8))
-                            .addGroup(jPanelBuscasLayout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButtonAtualisarSalvar)))
-                        .addGroup(jPanelBuscasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanelBuscasLayout.createSequentialGroup()
-                                .addGap(7, 7, 7)
-                                .addGroup(jPanelBuscasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jButtonAtualisarRemover)
-                                    .addComponent(jTextFieldPesquisarPreco, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(jPanelBuscasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanelBuscasLayout.createSequentialGroup()
-                                        .addGap(179, 179, 179)
-                                        .addComponent(jLabel10)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jTextFieldPesquisarQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanelBuscasLayout.createSequentialGroup()
-                                        .addGap(28, 28, 28)
-                                        .addComponent(jButtonPesquisarAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(28, 28, 28)
-                                        .addComponent(jButtonBuscasPesquisar))))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelBuscasLayout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextFieldPesquisarProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(jPanelBuscasLayout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButtonPesquisarNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(40, 40, 40)
+                        .addComponent(jButtonAtualisarSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(37, 37, 37)
+                        .addComponent(jButtonAtualisarRemover, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(46, 46, 46)
+                        .addComponent(jButtonPesquisarAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(42, 42, 42)
-                        .addComponent(jLabel9)))
-                .addContainerGap(29, Short.MAX_VALUE))
+                        .addComponent(jButtonBuscasPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanelBuscasLayout.createSequentialGroup()
+                        .addGap(520, 520, 520)
+                        .addComponent(jLabel10)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jTextFieldPesquisarQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanelBuscasLayout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jComboBoxPesquisarCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jTextFieldPesquisarProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel9)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jTextFieldPesquisarPreco, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(113, 113, 113))
         );
         jPanelBuscasLayout.setVerticalGroup(
             jPanelBuscasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelBuscasLayout.createSequentialGroup()
-                .addGap(85, 85, 85)
+                .addGap(47, 47, 47)
                 .addGroup(jPanelBuscasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextFieldPesquisarProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jComboBoxPesquisarCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7)
                     .addComponent(jLabel8)
-                    .addComponent(jLabel7))
-                .addGap(30, 30, 30)
-                .addGroup(jPanelBuscasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel9)
+                    .addComponent(jTextFieldPesquisarProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextFieldPesquisarPreco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel10)
-                    .addComponent(jTextFieldPesquisarQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(66, 66, 66)
+                    .addComponent(jLabel9))
+                .addGap(18, 18, 18)
                 .addGroup(jPanelBuscasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonBuscasPesquisar)
-                    .addComponent(jButtonPesquisarAtualizar)
-                    .addComponent(jButtonAtualisarRemover)
-                    .addComponent(jButtonAtualisarSalvar)
-                    .addComponent(jButtonPesquisarNovo))
-                .addContainerGap(273, Short.MAX_VALUE))
+                    .addComponent(jTextFieldPesquisarQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel10))
+                .addGap(18, 18, 18)
+                .addGroup(jPanelBuscasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonBuscasPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonPesquisarAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonAtualisarRemover, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonAtualisarSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonPesquisarNovo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(352, Short.MAX_VALUE))
         );
 
         jTabbedPane2.addTab("Pesquisar", jPanelBuscas);
+
+        jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Teste"));
+        jPanel4.setToolTipText("teste");
+
+        jButton2.setText("jButton2");
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addContainerGap(479, Short.MAX_VALUE)
+                .addComponent(jButton2)
+                .addContainerGap())
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addContainerGap(163, Short.MAX_VALUE)
+                .addComponent(jButton2)
+                .addContainerGap())
+        );
+
+        javax.swing.GroupLayout jPanelControleLayout = new javax.swing.GroupLayout(jPanelControle);
+        jPanelControle.setLayout(jPanelControleLayout);
+        jPanelControleLayout.setHorizontalGroup(
+            jPanelControleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelControleLayout.createSequentialGroup()
+                .addGap(109, 109, 109)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(107, Short.MAX_VALUE))
+        );
+        jPanelControleLayout.setVerticalGroup(
+            jPanelControleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelControleLayout.createSequentialGroup()
+                .addGap(49, 49, 49)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(229, Short.MAX_VALUE))
+        );
+
+        jTabbedPane2.addTab("Controle", jPanelControle);
+
+        jLabel11.setFont(new java.awt.Font("Bookman Old Style", 1, 36)); // NOI18N
+        jLabel11.setText("PDV");
+
+        jLabel12.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel12.setText("BEC Senac");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -509,11 +548,21 @@ public class pdvUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jTabbedPane2)
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(310, 310, 310)
+                .addComponent(jLabel11)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel12)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel11)
+                    .addComponent(jLabel12))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jTabbedPane2)
                 .addContainerGap())
         );
@@ -542,13 +591,13 @@ public class pdvUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jRadioButton1ActionPerformed
 
-    private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
+    private void jRadioButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton3ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButton2ActionPerformed
+    }//GEN-LAST:event_jRadioButton3ActionPerformed
 
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+    private void jTextFieldlVendasDescontosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldlVendasDescontosActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
+    }//GEN-LAST:event_jTextFieldlVendasDescontosActionPerformed
 
     private void jTextFieldPesquisarPrecoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldPesquisarPrecoActionPerformed
         // TODO add your handling code here:
@@ -642,6 +691,10 @@ public class pdvUI extends javax.swing.JFrame {
             refreshTEX();
     }//GEN-LAST:event_jButtonAtualisarRemoverActionPerformed
 
+    private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jRadioButton2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -693,17 +746,20 @@ public class pdvUI extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> jComboBoxVendasNome;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel jLabelVendasValor;
+    private javax.swing.JLabel jLabellVendasDescontos;
+    private javax.swing.JLabel jLabellVendasImpostos;
+    private javax.swing.JLabel jLabellVendasTotal;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanelBuscas;
     private javax.swing.JPanel jPanelControle;
     private javax.swing.JPanel jPanelVendas;
@@ -714,12 +770,12 @@ public class pdvUI extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane2;
     private javax.swing.JTable jTableVendas;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextFieldPesquisarPreco;
     private javax.swing.JTextField jTextFieldPesquisarProduto;
     private javax.swing.JTextField jTextFieldPesquisarQuantidade;
+    private javax.swing.JTextField jTextFieldlVendasDescontos;
+    private javax.swing.JTextField jTextFieldlVendasImpostos;
+    private javax.swing.JTextField jTextFieldlVendasTotal;
+    private javax.swing.JTextField jTextFieldlVendasValor;
     // End of variables declaration//GEN-END:variables
 }
