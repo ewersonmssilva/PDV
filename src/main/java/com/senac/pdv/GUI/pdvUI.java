@@ -82,6 +82,8 @@ public class pdvUI extends javax.swing.JFrame {
         jTextField4 = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jComboBoxVendasNome = new javax.swing.JComboBox<>();
+        jPanelControle = new javax.swing.JPanel();
+        jButton2 = new javax.swing.JButton();
         jPanelBuscas = new javax.swing.JPanel();
         jButtonBuscasPesquisar = new javax.swing.JButton();
         jTextFieldPesquisarProduto = new javax.swing.JTextField();
@@ -96,8 +98,6 @@ public class pdvUI extends javax.swing.JFrame {
         jButtonAtualisarSalvar = new javax.swing.JButton();
         jButtonPesquisarNovo = new javax.swing.JButton();
         jButtonAtualisarRemover = new javax.swing.JButton();
-        jPanelControle = new javax.swing.JPanel();
-        jButton2 = new javax.swing.JButton();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -356,6 +356,27 @@ public class pdvUI extends javax.swing.JFrame {
 
         jTabbedPane2.addTab("Vendas", jPanelVendas);
 
+        jButton2.setText("jButton2");
+
+        javax.swing.GroupLayout jPanelControleLayout = new javax.swing.GroupLayout(jPanelControle);
+        jPanelControle.setLayout(jPanelControleLayout);
+        jPanelControleLayout.setHorizontalGroup(
+            jPanelControleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelControleLayout.createSequentialGroup()
+                .addGap(196, 196, 196)
+                .addComponent(jButton2)
+                .addContainerGap(513, Short.MAX_VALUE))
+        );
+        jPanelControleLayout.setVerticalGroup(
+            jPanelControleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelControleLayout.createSequentialGroup()
+                .addGap(109, 109, 109)
+                .addComponent(jButton2)
+                .addContainerGap(342, Short.MAX_VALUE))
+        );
+
+        jTabbedPane2.addTab("Controle", jPanelControle);
+
         jButtonBuscasPesquisar.setText("Pesquisar");
         jButtonBuscasPesquisar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -371,7 +392,7 @@ public class pdvUI extends javax.swing.JFrame {
 
         jLabel7.setText("Código");
 
-        jLabel8.setText("Nome do Produto");
+        jLabel8.setText("Nome:");
 
         jTextFieldPesquisarPreco.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -385,7 +406,7 @@ public class pdvUI extends javax.swing.JFrame {
             }
         });
 
-        jLabel9.setText("Preço");
+        jLabel9.setText("Preço:");
 
         jLabel10.setText("Quantidade");
 
@@ -422,88 +443,72 @@ public class pdvUI extends javax.swing.JFrame {
         jPanelBuscasLayout.setHorizontalGroup(
             jPanelBuscasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelBuscasLayout.createSequentialGroup()
-                .addGap(26, 26, 26)
-                .addGroup(jPanelBuscasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanelBuscasLayout.createSequentialGroup()
-                        .addGroup(jPanelBuscasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel7)
-                            .addComponent(jComboBoxPesquisarCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(363, 363, 363))
-                    .addGroup(jPanelBuscasLayout.createSequentialGroup()
-                        .addComponent(jButtonPesquisarNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanelBuscasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel8)
-                            .addGroup(jPanelBuscasLayout.createSequentialGroup()
-                                .addGap(11, 11, 11)
-                                .addGroup(jPanelBuscasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(jTextFieldPesquisarProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPanelBuscasLayout.createSequentialGroup()
-                                        .addComponent(jButtonAtualisarSalvar)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jButtonAtualisarRemover)
-                                        .addGap(33, 33, 33)
-                                        .addComponent(jButtonPesquisarAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                        .addGap(35, 35, 35)))
+                .addGap(105, 105, 105)
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanelBuscasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButtonPesquisarNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBoxPesquisarCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(jPanelBuscasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelBuscasLayout.createSequentialGroup()
                         .addGroup(jPanelBuscasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextFieldPesquisarPreco, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel9))
-                        .addGap(35, 35, 35)
+                            .addGroup(jPanelBuscasLayout.createSequentialGroup()
+                                .addGap(42, 42, 42)
+                                .addComponent(jLabel8))
+                            .addGroup(jPanelBuscasLayout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButtonAtualisarSalvar)))
                         .addGroup(jPanelBuscasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel10)
-                            .addComponent(jTextFieldPesquisarQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jButtonBuscasPesquisar))
-                .addContainerGap(90, Short.MAX_VALUE))
+                            .addGroup(jPanelBuscasLayout.createSequentialGroup()
+                                .addGap(7, 7, 7)
+                                .addGroup(jPanelBuscasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jButtonAtualisarRemover)
+                                    .addComponent(jTextFieldPesquisarPreco, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanelBuscasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanelBuscasLayout.createSequentialGroup()
+                                        .addGap(179, 179, 179)
+                                        .addComponent(jLabel10)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jTextFieldPesquisarQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanelBuscasLayout.createSequentialGroup()
+                                        .addGap(28, 28, 28)
+                                        .addComponent(jButtonPesquisarAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(28, 28, 28)
+                                        .addComponent(jButtonBuscasPesquisar))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelBuscasLayout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTextFieldPesquisarProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanelBuscasLayout.createSequentialGroup()
+                        .addGap(42, 42, 42)
+                        .addComponent(jLabel9)))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
         jPanelBuscasLayout.setVerticalGroup(
             jPanelBuscasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelBuscasLayout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addGroup(jPanelBuscasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(jLabel8)
-                    .addComponent(jLabel9)
-                    .addComponent(jLabel10))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(85, 85, 85)
                 .addGroup(jPanelBuscasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextFieldPesquisarProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextFieldPesquisarPreco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextFieldPesquisarQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBoxPesquisarCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(25, 25, 25)
+                    .addComponent(jComboBoxPesquisarCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8)
+                    .addComponent(jLabel7))
+                .addGap(30, 30, 30)
                 .addGroup(jPanelBuscasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(jTextFieldPesquisarPreco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel10)
+                    .addComponent(jTextFieldPesquisarQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(66, 66, 66)
+                .addGroup(jPanelBuscasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButtonBuscasPesquisar)
                     .addComponent(jButtonPesquisarAtualizar)
-                    .addComponent(jButtonAtualisarSalvar)
-                    .addComponent(jButtonPesquisarNovo)
                     .addComponent(jButtonAtualisarRemover)
-                    .addComponent(jButtonBuscasPesquisar))
-                .addGap(410, 410, 410))
+                    .addComponent(jButtonAtualisarSalvar)
+                    .addComponent(jButtonPesquisarNovo))
+                .addContainerGap(273, Short.MAX_VALUE))
         );
 
         jTabbedPane2.addTab("Pesquisar", jPanelBuscas);
-
-        jButton2.setText("jButton2");
-
-        javax.swing.GroupLayout jPanelControleLayout = new javax.swing.GroupLayout(jPanelControle);
-        jPanelControle.setLayout(jPanelControleLayout);
-        jPanelControleLayout.setHorizontalGroup(
-            jPanelControleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelControleLayout.createSequentialGroup()
-                .addGap(196, 196, 196)
-                .addComponent(jButton2)
-                .addContainerGap(513, Short.MAX_VALUE))
-        );
-        jPanelControleLayout.setVerticalGroup(
-            jPanelControleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelControleLayout.createSequentialGroup()
-                .addGap(109, 109, 109)
-                .addComponent(jButton2)
-                .addContainerGap(342, Short.MAX_VALUE))
-        );
-
-        jTabbedPane2.addTab("Controle", jPanelControle);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
