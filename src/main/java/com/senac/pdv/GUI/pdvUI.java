@@ -93,7 +93,7 @@ public class pdvUI extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jButtonPesquisarAtualizar = new javax.swing.JButton();
-        jButtonAtualisarAdcionar = new javax.swing.JButton();
+        jButtonAtualisarSalvar = new javax.swing.JButton();
         jButtonPesquisarNovo = new javax.swing.JButton();
         jButtonAtualisarRemover = new javax.swing.JButton();
         jPanelControle = new javax.swing.JPanel();
@@ -396,10 +396,10 @@ public class pdvUI extends javax.swing.JFrame {
             }
         });
 
-        jButtonAtualisarAdcionar.setText("Adcionar");
-        jButtonAtualisarAdcionar.addActionListener(new java.awt.event.ActionListener() {
+        jButtonAtualisarSalvar.setText("Salvar");
+        jButtonAtualisarSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonAtualisarAdcionarActionPerformed(evt);
+                jButtonAtualisarSalvarActionPerformed(evt);
             }
         });
 
@@ -439,7 +439,7 @@ public class pdvUI extends javax.swing.JFrame {
                                 .addGroup(jPanelBuscasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addComponent(jTextFieldPesquisarProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(jPanelBuscasLayout.createSequentialGroup()
-                                        .addComponent(jButtonAtualisarAdcionar)
+                                        .addComponent(jButtonAtualisarSalvar)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(jButtonAtualisarRemover)
                                         .addGap(33, 33, 33)
@@ -475,7 +475,7 @@ public class pdvUI extends javax.swing.JFrame {
                 .addGap(25, 25, 25)
                 .addGroup(jPanelBuscasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonPesquisarAtualizar)
-                    .addComponent(jButtonAtualisarAdcionar)
+                    .addComponent(jButtonAtualisarSalvar)
                     .addComponent(jButtonPesquisarNovo)
                     .addComponent(jButtonAtualisarRemover)
                     .addComponent(jButtonBuscasPesquisar))
@@ -610,11 +610,11 @@ public class pdvUI extends javax.swing.JFrame {
             produto.setQuantidade(quantidade); 
             DAO.atualizar(produto);
             JOptionPane.showConfirmDialog(null, 
-                "Clique ok para sair", "Produto atualizado com sucesso!", JOptionPane.DEFAULT_OPTION);
+                "Produto atualizado com sucesso!", "Mensagem", JOptionPane.DEFAULT_OPTION);
             refreshTEX();
     }//GEN-LAST:event_jButtonPesquisarAtualizarActionPerformed
 
-    private void jButtonAtualisarAdcionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAtualisarAdcionarActionPerformed
+    private void jButtonAtualisarSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAtualisarSalvarActionPerformed
             ProdutoDAO DAO = new ProdutoDAO();
             Produto produto = new Produto();
             //produto = DAO.buscaPorCodigo((int) jComboBoxPesquisarCodigo.getSelectedItem());                       
@@ -627,9 +627,9 @@ public class pdvUI extends javax.swing.JFrame {
             produto.setQuantidade(quantidade); 
             DAO.inserir(produto);
             JOptionPane.showConfirmDialog(null, 
-                "Clique ok para sair", "Produto Adicionado com sucesso!", JOptionPane.DEFAULT_OPTION);
+                "Produto Adicionado com sucesso!", "Mensagem", JOptionPane.DEFAULT_OPTION);
             refreshTEX();
-    }//GEN-LAST:event_jButtonAtualisarAdcionarActionPerformed
+    }//GEN-LAST:event_jButtonAtualisarSalvarActionPerformed
 
     private void jButtonPesquisarNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPesquisarNovoActionPerformed
         jComboBoxPesquisarCodigo.setSelectedIndex(-1);
@@ -642,7 +642,7 @@ public class pdvUI extends javax.swing.JFrame {
             ProdutoDAO DAO = new ProdutoDAO();	  		
             DAO.remover((int) jComboBoxPesquisarCodigo.getSelectedItem());
             JOptionPane.showConfirmDialog(null, 
-                "Clique ok para sair", "Produto removido com sucesso!", JOptionPane.DEFAULT_OPTION);  
+                "Produto removido com sucesso!", "Mensagem", JOptionPane.DEFAULT_OPTION);  
             refreshTEX();
     }//GEN-LAST:event_jButtonAtualisarRemoverActionPerformed
 
@@ -684,8 +684,8 @@ public class pdvUI extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButtonAtualisarAdcionar;
     private javax.swing.JButton jButtonAtualisarRemover;
+    private javax.swing.JButton jButtonAtualisarSalvar;
     private javax.swing.JButton jButtonBuscasPesquisar;
     private javax.swing.JButton jButtonPesquisarAtualizar;
     private javax.swing.JButton jButtonPesquisarNovo;

@@ -428,7 +428,7 @@
                                       <Group type="103" groupAlignment="1" max="-2" attributes="0">
                                           <Component id="jTextFieldPesquisarProduto" min="-2" pref="313" max="-2" attributes="0"/>
                                           <Group type="102" attributes="0">
-                                              <Component id="jButtonAtualisarAdcionar" min="-2" max="-2" attributes="0"/>
+                                              <Component id="jButtonAtualisarSalvar" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace max="32767" attributes="0"/>
                                               <Component id="jButtonAtualisarRemover" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
@@ -478,7 +478,7 @@
                       <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jButtonPesquisarAtualizar" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jButtonAtualisarAdcionar" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jButtonAtualisarSalvar" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jButtonPesquisarNovo" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jButtonAtualisarRemover" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jButtonBuscasPesquisar" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -550,12 +550,12 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonPesquisarAtualizarActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="jButtonAtualisarAdcionar">
+            <Component class="javax.swing.JButton" name="jButtonAtualisarSalvar">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Adcionar"/>
+                <Property name="text" type="java.lang.String" value="Salvar"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonAtualisarAdcionarActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonAtualisarSalvarActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JButton" name="jButtonPesquisarNovo">
