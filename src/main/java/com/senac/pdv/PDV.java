@@ -27,12 +27,12 @@ public class PDV {
 
 		Produto p1 = new Produto();
 		p1.setNome("Desktop");
-		p1.setValor(3100.00);
+		p1.setPreco(3100.00);
 		venda.adicionarProduto(p1);
 
 		Produto p2 = new Produto();
 		p2.setNome("Monitor");
-		p2.setValor(800.00);
+		p2.setPreco(800.00);
 
 		venda.adicionarProduto(p2);
 		venda.setImposto(new ICMSSP());

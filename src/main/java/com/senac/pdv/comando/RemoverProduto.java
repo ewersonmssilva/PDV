@@ -12,7 +12,7 @@ public class RemoverProduto implements Comando {
 		ProdutoDAO DAO = new ProdutoDAO();
 		
 		System.out.println("Digite o ID do produto que deseja remover: ");   	  		
- 		DAO.remover(scanner.nextInt());
+ 		//DAO.remover(scanner.nextInt());
 	}
 
 }

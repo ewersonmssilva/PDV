@@ -11,6 +11,8 @@ import com.senac.pdv.dao.ProdutoDAO;
 import com.senac.pdv.modelo.Produto;
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 /**
  *
  * @author ewerson.mssilva
@@ -22,7 +24,11 @@ public class pdvUI extends javax.swing.JFrame {
      */
     public pdvUI() {
         initComponents();
-        refreshTEX();
+        
+                DefaultTableModel modelo = (DefaultTableModel) jTablePesquisar.getModel();
+        jTablePesquisar.setRowSorter(new TableRowSorter(modelo));
+        
+        refresh();
             /*   
             ProdutoDAO DAO = new ProdutoDAO();
 
@@ -35,7 +41,23 @@ public class pdvUI extends javax.swing.JFrame {
         
     }
     
-    public void refreshTEX(){        
+    public void refresh(){ 
+        DefaultTableModel modelo = (DefaultTableModel) jTablePesquisar.getModel();
+        modelo.setNumRows(0);
+        ProdutoDAO pdao = new ProdutoDAO();
+
+        for (Produto produto : pdao.read()) {
+
+            modelo.addRow(new Object[]{
+                produto.getId(),
+                produto.getNome(),
+                produto.getQuantidade(),
+                produto.getPreco()
+            });
+
+        }
+
+        /*
             ProdutoDAO DAO = new ProdutoDAO();
 
             for(Produto prod : DAO.listar()) {                    
@@ -43,8 +65,38 @@ public class pdvUI extends javax.swing.JFrame {
                 jComboBoxPesquisarCodigo.addItem(prodGET.getId());
                 jComboBoxCodigo.addItem(prodGET.getId());
                 jComboBoxVendasNome.addItem(prodGET.getNome());
-            } 
+            } */
     }
+    
+    public void readJTableForDesc(String desc) {
+        
+        DefaultTableModel modelo = (DefaultTableModel) jTablePesquisar.getModel();
+        modelo.setNumRows(0);
+        ProdutoDAO pdao = new ProdutoDAO();
+
+        for (Produto p : pdao.readForDesc(desc)) {
+
+            modelo.addRow(new Object[]{
+                p.getId(),
+                p.getNome(),
+                p.getQuantidade(),
+                p.getPreco()
+            });
+
+        }        
+
+    }
+    
+    public void descontoSelecionado(/*ItemEvent event*/) {
+        if(jRadioButton1.isSelected())
+            JOptionPane.showMessageDialog(null,"teste1");
+        else if(jRadioButton2.isSelected())
+            JOptionPane.showMessageDialog(null,"teste2");
+        else if(jRadioButton3.isSelected())
+            JOptionPane.showMessageDialog(null,"teste3");
+        else if(jRadioButton4.isSelected())
+            JOptionPane.showMessageDialog(null,"teste4");
+  }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -84,18 +136,18 @@ public class pdvUI extends javax.swing.JFrame {
         jComboBoxVendasNome = new javax.swing.JComboBox<>();
         jPanelBuscas = new javax.swing.JPanel();
         jButtonBuscasPesquisar = new javax.swing.JButton();
-        jTextFieldPesquisarProduto = new javax.swing.JTextField();
-        jLabel7 = new javax.swing.JLabel();
+        jTextFieldPesquisarNome = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
-        jTextFieldPesquisarPreco = new javax.swing.JTextField();
-        jTextFieldPesquisarQuantidade = new javax.swing.JTextField();
-        jComboBoxPesquisarCodigo = new javax.swing.JComboBox<>();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
+        jTextFieldPesquisarPreco = new javax.swing.JTextField();
+        jTextFieldPesquisarQuantidade = new javax.swing.JTextField();
         jButtonPesquisarAtualizar = new javax.swing.JButton();
-        jButtonAtualisarSalvar = new javax.swing.JButton();
-        jButtonPesquisarNovo = new javax.swing.JButton();
+        jButtonPesquisarCadastrar = new javax.swing.JButton();
         jButtonAtualisarRemover = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTablePesquisar = new javax.swing.JTable();
+        jTextFieldPesquisarPesquisar = new javax.swing.JTextField();
         jPanelControle = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
@@ -182,7 +234,7 @@ public class pdvUI extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Código", "Produto", "Preço Unit.", "Quantidade"
+                "CÃ³digo", "Produto", "PreÃ§o Unit.", "Quantidade"
             }
         ) {
             Class[] types = new Class [] {
@@ -222,7 +274,7 @@ public class pdvUI extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setText("Código:");
+        jLabel1.setText("CÃ³digo:");
 
         jLabel2.setText("Nome:");
 
@@ -279,39 +331,41 @@ public class pdvUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanelVendasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelVendasLayout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBoxCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBoxVendasNome, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButtonVendasAdicionar))
-                    .addGroup(jPanelVendasLayout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 588, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(jPanelVendasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanelVendasLayout.createSequentialGroup()
-                                .addGap(26, 26, 26)
-                                .addGroup(jPanelVendasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextFieldlVendasTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextFieldlVendasValor, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextFieldlVendasDescontos, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabelVendasValor)
-                                    .addComponent(jLabellVendasImpostos)
-                                    .addComponent(jLabellVendasTotal)
-                                    .addComponent(jTextFieldlVendasImpostos, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabellVendasDescontos)
-                                    .addComponent(jRadioButton1)
-                                    .addComponent(jRadioButton3)
-                                    .addComponent(jRadioButton4)
-                                    .addComponent(jRadioButton2)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelVendasLayout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButtonVendasCancelar)
                                 .addGap(18, 18, 18)
-                                .addComponent(jButtonVendasFinaliza)))))
-                .addContainerGap(21, Short.MAX_VALUE))
+                                .addComponent(jButtonVendasFinaliza))
+                            .addGroup(jPanelVendasLayout.createSequentialGroup()
+                                .addGap(26, 26, 26)
+                                .addGroup(jPanelVendasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabelVendasValor)
+                                    .addComponent(jTextFieldlVendasValor, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jTextFieldlVendasImpostos, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabellVendasImpostos)
+                                    .addComponent(jTextFieldlVendasDescontos, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabellVendasDescontos)
+                                    .addComponent(jTextFieldlVendasTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabellVendasTotal)))))
+                    .addGroup(jPanelVendasLayout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jComboBoxCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jComboBoxVendasNome, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(14, 14, 14)
+                        .addGroup(jPanelVendasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jRadioButton4)
+                            .addComponent(jRadioButton2)
+                            .addComponent(jRadioButton1)
+                            .addGroup(jPanelVendasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jButtonVendasAdicionar)
+                                .addComponent(jRadioButton3)))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanelVendasLayout.setVerticalGroup(
             jPanelVendasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -369,31 +423,23 @@ public class pdvUI extends javax.swing.JFrame {
             }
         });
 
-        jTextFieldPesquisarProduto.addActionListener(new java.awt.event.ActionListener() {
+        jTextFieldPesquisarNome.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldPesquisarProdutoActionPerformed(evt);
+                jTextFieldPesquisarNomeActionPerformed(evt);
             }
         });
 
-        jLabel7.setText("Código");
-
         jLabel8.setText("Nome:");
+
+        jLabel9.setText("PreÃ§o:");
+
+        jLabel10.setText("Qtd:");
 
         jTextFieldPesquisarPreco.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextFieldPesquisarPrecoActionPerformed(evt);
             }
         });
-
-        jComboBoxPesquisarCodigo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBoxPesquisarCodigoActionPerformed(evt);
-            }
-        });
-
-        jLabel9.setText("Preço:");
-
-        jLabel10.setText("Quantidade:");
 
         jButtonPesquisarAtualizar.setText("Atualizar");
         jButtonPesquisarAtualizar.setPreferredSize(new java.awt.Dimension(80, 23));
@@ -403,29 +449,74 @@ public class pdvUI extends javax.swing.JFrame {
             }
         });
 
-        jButtonAtualisarSalvar.setText("Salvar");
-        jButtonAtualisarSalvar.setPreferredSize(new java.awt.Dimension(80, 23));
-        jButtonAtualisarSalvar.addActionListener(new java.awt.event.ActionListener() {
+        jButtonPesquisarCadastrar.setText("Cadastrar");
+        jButtonPesquisarCadastrar.setMaximumSize(new java.awt.Dimension(80, 23));
+        jButtonPesquisarCadastrar.setMinimumSize(new java.awt.Dimension(80, 23));
+        jButtonPesquisarCadastrar.setPreferredSize(new java.awt.Dimension(80, 23));
+        jButtonPesquisarCadastrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonAtualisarSalvarActionPerformed(evt);
+                jButtonPesquisarCadastrarActionPerformed(evt);
             }
         });
 
-        jButtonPesquisarNovo.setText("Novo");
-        jButtonPesquisarNovo.setMaximumSize(new java.awt.Dimension(80, 23));
-        jButtonPesquisarNovo.setMinimumSize(new java.awt.Dimension(80, 23));
-        jButtonPesquisarNovo.setPreferredSize(new java.awt.Dimension(80, 23));
-        jButtonPesquisarNovo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonPesquisarNovoActionPerformed(evt);
-            }
-        });
-
-        jButtonAtualisarRemover.setText("Remover");
+        jButtonAtualisarRemover.setText("Excluir");
         jButtonAtualisarRemover.setPreferredSize(new java.awt.Dimension(80, 23));
         jButtonAtualisarRemover.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonAtualisarRemoverActionPerformed(evt);
+            }
+        });
+
+        jTablePesquisar.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Id", "Descricao", "Qtd", "Preco"
+            }
+        ));
+        jTablePesquisar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTablePesquisarMouseClicked(evt);
+            }
+        });
+        jTablePesquisar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTablePesquisarKeyReleased(evt);
+            }
+        });
+        jScrollPane2.setViewportView(jTablePesquisar);
+        if (jTablePesquisar.getColumnModel().getColumnCount() > 0) {
+            jTablePesquisar.getColumnModel().getColumn(0).setMinWidth(80);
+            jTablePesquisar.getColumnModel().getColumn(0).setPreferredWidth(80);
+            jTablePesquisar.getColumnModel().getColumn(0).setMaxWidth(80);
+            jTablePesquisar.getColumnModel().getColumn(2).setMinWidth(80);
+            jTablePesquisar.getColumnModel().getColumn(2).setPreferredWidth(80);
+            jTablePesquisar.getColumnModel().getColumn(2).setMaxWidth(80);
+            jTablePesquisar.getColumnModel().getColumn(3).setMinWidth(120);
+            jTablePesquisar.getColumnModel().getColumn(3).setPreferredWidth(120);
+            jTablePesquisar.getColumnModel().getColumn(3).setMaxWidth(120);
+        }
+
+        jTextFieldPesquisarPesquisar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldPesquisarPesquisarActionPerformed(evt);
             }
         });
 
@@ -434,61 +525,56 @@ public class pdvUI extends javax.swing.JFrame {
         jPanelBuscasLayout.setHorizontalGroup(
             jPanelBuscasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelBuscasLayout.createSequentialGroup()
-                .addGroup(jPanelBuscasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(32, 32, 32)
+                .addGroup(jPanelBuscasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanelBuscasLayout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButtonPesquisarNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(40, 40, 40)
-                        .addComponent(jButtonAtualisarSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(37, 37, 37)
-                        .addComponent(jButtonAtualisarRemover, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(46, 46, 46)
-                        .addComponent(jButtonPesquisarAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(42, 42, 42)
-                        .addComponent(jButtonBuscasPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanelBuscasLayout.createSequentialGroup()
-                        .addGap(520, 520, 520)
-                        .addComponent(jLabel10)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextFieldPesquisarQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanelBuscasLayout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel7)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jComboBoxPesquisarCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
                         .addComponent(jLabel8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextFieldPesquisarProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel9)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextFieldPesquisarPreco, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(113, 113, 113))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanelBuscasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanelBuscasLayout.createSequentialGroup()
+                                .addComponent(jTextFieldPesquisarNome, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel9)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTextFieldPesquisarPreco, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel10)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTextFieldPesquisarQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanelBuscasLayout.createSequentialGroup()
+                                .addComponent(jButtonPesquisarCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(45, 45, 45)
+                                .addComponent(jButtonPesquisarAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(32, 32, 32)
+                                .addComponent(jButtonAtualisarRemover, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jTextFieldPesquisarPesquisar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButtonBuscasPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 760, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 35, Short.MAX_VALUE))
         );
         jPanelBuscasLayout.setVerticalGroup(
             jPanelBuscasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelBuscasLayout.createSequentialGroup()
-                .addGap(47, 47, 47)
+                .addGap(50, 50, 50)
                 .addGroup(jPanelBuscasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBoxPesquisarCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7)
                     .addComponent(jLabel8)
-                    .addComponent(jTextFieldPesquisarProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldPesquisarNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextFieldPesquisarPreco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel9))
-                .addGap(18, 18, 18)
+                    .addComponent(jLabel9)
+                    .addComponent(jLabel10)
+                    .addComponent(jTextFieldPesquisarQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(26, 26, 26)
                 .addGroup(jPanelBuscasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextFieldPesquisarQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel10))
-                .addGap(18, 18, 18)
-                .addGroup(jPanelBuscasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonBuscasPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonPesquisarAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonPesquisarCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButtonAtualisarRemover, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonAtualisarSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonPesquisarNovo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(352, Short.MAX_VALUE))
+                    .addComponent(jButtonPesquisarAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonBuscasPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTextFieldPesquisarPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(57, 57, 57)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(35, Short.MAX_VALUE))
         );
 
         jTabbedPane2.addTab("Pesquisar", jPanelBuscas);
@@ -522,14 +608,14 @@ public class pdvUI extends javax.swing.JFrame {
             .addGroup(jPanelControleLayout.createSequentialGroup()
                 .addGap(109, 109, 109)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(107, Short.MAX_VALUE))
+                .addContainerGap(123, Short.MAX_VALUE))
         );
         jPanelControleLayout.setVerticalGroup(
             jPanelControleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelControleLayout.createSequentialGroup()
                 .addGap(49, 49, 49)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(229, Short.MAX_VALUE))
+                .addContainerGap(235, Short.MAX_VALUE))
         );
 
         jTabbedPane2.addTab("Controle", jPanelControle);
@@ -570,6 +656,130 @@ public class pdvUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jTextFieldPesquisarPrecoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldPesquisarPrecoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldPesquisarPrecoActionPerformed
+
+    private void jButtonBuscasPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscasPesquisarActionPerformed
+        readJTableForDesc(jTextFieldPesquisarPesquisar.getText());
+    }//GEN-LAST:event_jButtonBuscasPesquisarActionPerformed
+
+    private void jTextFieldPesquisarNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldPesquisarNomeActionPerformed
+                Object obj=evt.getSource();
+        if(obj == jTextFieldPesquisarNome){
+            ProdutoDAO DAO = new ProdutoDAO();
+            //String y =(String)jComboBoxPesquisarCodigo.getSelectedItem();
+            //int b = Integer.parseInt(y);
+            //String applicationNumber = String.valueOf((String)jComboBoxPesquisarCodigo.getSelectedItem());
+            //String z = Integer.toString((int) jComboBoxPesquisarCodigo.getSelectedItem());
+            String getValue = jTextFieldPesquisarNome.getText();
+            Produto prodGET = (Produto) DAO.buscaPorNome(getValue);
+            //jTextFieldPesquisarProduto.setText(z); 
+    //        jComboBoxPesquisarCodigo.setSelectedItem(prodGET.getId());
+
+                    
+        }
+    }//GEN-LAST:event_jTextFieldPesquisarNomeActionPerformed
+
+    private void jButtonPesquisarAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPesquisarAtualizarActionPerformed
+            if (jTablePesquisar.getSelectedRow() != -1) {
+
+            Produto produto = new Produto();
+            ProdutoDAO dao = new ProdutoDAO();
+
+            produto.setNome(jTextFieldPesquisarNome.getText());
+            produto.setQuantidade(Integer.parseInt(jTextFieldPesquisarQuantidade.getText()));
+            produto.setPreco(Double.parseDouble(jTextFieldPesquisarPreco.getText()));
+            produto.setId((int) jTablePesquisar.getValueAt(jTablePesquisar.getSelectedRow(), 0));
+            //dao.update(p);
+            dao.atualizar(produto);
+
+            jTextFieldPesquisarNome.setText("");
+            jTextFieldPesquisarQuantidade.setText("");
+            jTextFieldPesquisarPreco.setText("");
+
+            //readJTable();
+            refresh();
+
+        }
+        /*
+        ProdutoDAO DAO = new ProdutoDAO();
+            Produto produto = new Produto();
+     //       produto = DAO.buscaPorCodigo((int) jComboBoxPesquisarCodigo.getSelectedItem());                       
+            produto.setNome(jTextFieldPesquisarNome.getText());
+            String getValueValor = jTextFieldPesquisarPreco.getText();
+            double valor = Double.parseDouble(getValueValor);
+            produto.setPreco(valor);
+            String getValueQuantidade = jTextFieldPesquisarQuantidade.getText();
+            int quantidade = Integer.parseInt(getValueQuantidade);
+            produto.setQuantidade(quantidade); 
+            DAO.atualizar(produto);
+            JOptionPane.showConfirmDialog(null, 
+                "Produto atualizado com sucesso!", "Mensagem", JOptionPane.DEFAULT_OPTION);
+            refreshTEX(); */
+    }//GEN-LAST:event_jButtonPesquisarAtualizarActionPerformed
+
+    private void jButtonPesquisarCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPesquisarCadastrarActionPerformed
+            ProdutoDAO DAO = new ProdutoDAO();
+            Produto produto = new Produto();
+            //produto = DAO.buscaPorCodigo((int) jComboBoxPesquisarCodigo.getSelectedItem());                       
+            produto.setNome(jTextFieldPesquisarNome.getText());
+            String getValueValor = jTextFieldPesquisarPreco.getText();
+            double valor = Double.parseDouble(getValueValor);
+            produto.setPreco(valor);
+            String getValueQuantidade = jTextFieldPesquisarQuantidade.getText();
+            int quantidade = Integer.parseInt(getValueQuantidade);
+            produto.setQuantidade(quantidade); 
+            DAO.inserir(produto);
+            JOptionPane.showConfirmDialog(null, 
+                "Produto Adicionado com sucesso!", "Mensagem", JOptionPane.DEFAULT_OPTION);
+            refresh();
+    }//GEN-LAST:event_jButtonPesquisarCadastrarActionPerformed
+
+    private void jButtonAtualisarRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAtualisarRemoverActionPerformed
+        if (jTablePesquisar.getSelectedRow() != -1) {
+
+            Produto produto = new Produto();
+            ProdutoDAO dao = new ProdutoDAO();
+
+            produto.setId((int) jTablePesquisar.getValueAt(jTablePesquisar.getSelectedRow(), 0));
+            
+            //dao.delete(p);
+            dao.remover(produto);
+
+            jTextFieldPesquisarNome.setText("");
+            jTextFieldPesquisarQuantidade.setText("");
+            jTextFieldPesquisarPreco.setText("");
+
+            //readJTable();
+            refresh();
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Selecione um produto para excluir.");
+        }
+    }//GEN-LAST:event_jButtonAtualisarRemoverActionPerformed
+
+    private void jTextFieldlVendasDescontosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldlVendasDescontosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldlVendasDescontosActionPerformed
+
+    private void jRadioButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jRadioButton3ActionPerformed
+
+    private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jRadioButton2ActionPerformed
+
+    private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jRadioButton1ActionPerformed
+
+    private void jButtonVendasAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVendasAdicionarActionPerformed
+
+        Object _ADDquantidade = JOptionPane.showInputDialog("Digite a quantidade", "Aqui!");
+    }//GEN-LAST:event_jButtonVendasAdicionarActionPerformed
+
     private void jComboBoxCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxCodigoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBoxCodigoActionPerformed
@@ -582,118 +792,27 @@ public class pdvUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButtonVendasFinalizaMouseClicked
 
-    private void jButtonVendasAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVendasAdicionarActionPerformed
-        
-        Object _ADDquantidade = JOptionPane.showInputDialog("Digite a quantidade", "Aqui!");        
-    }//GEN-LAST:event_jButtonVendasAdicionarActionPerformed
-
-    private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
+    private void jTextFieldPesquisarPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldPesquisarPesquisarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButton1ActionPerformed
+    }//GEN-LAST:event_jTextFieldPesquisarPesquisarActionPerformed
 
-    private void jRadioButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButton3ActionPerformed
+    private void jTablePesquisarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTablePesquisarKeyReleased
+        if (jTablePesquisar.getSelectedRow() != -1) {
+            jTextFieldPesquisarNome.setText(jTablePesquisar.getValueAt(jTablePesquisar.getSelectedRow(), 1).toString());
+            jTextFieldPesquisarQuantidade.setText(jTablePesquisar.getValueAt(jTablePesquisar.getSelectedRow(), 2).toString());
+            jTextFieldPesquisarPreco.setText(jTablePesquisar.getValueAt(jTablePesquisar.getSelectedRow(), 3).toString());
 
-    private void jTextFieldlVendasDescontosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldlVendasDescontosActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldlVendasDescontosActionPerformed
-
-    private void jTextFieldPesquisarPrecoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldPesquisarPrecoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldPesquisarPrecoActionPerformed
-
-    private void jButtonBuscasPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBuscasPesquisarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonBuscasPesquisarActionPerformed
-
-    private void jComboBoxPesquisarCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxPesquisarCodigoActionPerformed
-        Object obj=evt.getSource();
-        if(obj == jComboBoxPesquisarCodigo){
-            ProdutoDAO DAO = new ProdutoDAO();
-            //String y =(String)jComboBoxPesquisarCodigo.getSelectedItem();
-            //int b = Integer.parseInt(y);
-            //String applicationNumber = String.valueOf((String)jComboBoxPesquisarCodigo.getSelectedItem());
-            //String z = Integer.toString((int) jComboBoxPesquisarCodigo.getSelectedItem());
-            Produto prodGET = DAO.buscaPorCodigo((int) jComboBoxPesquisarCodigo.getSelectedItem());
-            //jTextFieldPesquisarProduto.setText(z); 
-            jTextFieldPesquisarProduto.setText(prodGET.getNome());
-            String preco = Double.toString(prodGET.getValor());
-            jTextFieldPesquisarPreco.setText(preco);
-            String quantidade = Integer.toString(prodGET.getQuantidade());
-            jTextFieldPesquisarQuantidade.setText(quantidade);
         }
-    }//GEN-LAST:event_jComboBoxPesquisarCodigoActionPerformed
+    }//GEN-LAST:event_jTablePesquisarKeyReleased
 
-    private void jTextFieldPesquisarProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldPesquisarProdutoActionPerformed
-                Object obj=evt.getSource();
-        if(obj == jTextFieldPesquisarProduto){
-            ProdutoDAO DAO = new ProdutoDAO();
-            //String y =(String)jComboBoxPesquisarCodigo.getSelectedItem();
-            //int b = Integer.parseInt(y);
-            //String applicationNumber = String.valueOf((String)jComboBoxPesquisarCodigo.getSelectedItem());
-            //String z = Integer.toString((int) jComboBoxPesquisarCodigo.getSelectedItem());
-            String getValue = jTextFieldPesquisarProduto.getText();
-            Produto prodGET = (Produto) DAO.buscaPorNome(getValue);
-            //jTextFieldPesquisarProduto.setText(z); 
-            jComboBoxPesquisarCodigo.setSelectedItem(prodGET.getId());
+    private void jTablePesquisarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTablePesquisarMouseClicked
+        if (jTablePesquisar.getSelectedRow() != -1) {
+            jTextFieldPesquisarNome.setText(jTablePesquisar.getValueAt(jTablePesquisar.getSelectedRow(), 1).toString());
+            jTextFieldPesquisarQuantidade.setText(jTablePesquisar.getValueAt(jTablePesquisar.getSelectedRow(), 2).toString());
+            jTextFieldPesquisarPreco.setText(jTablePesquisar.getValueAt(jTablePesquisar.getSelectedRow(), 3).toString());
 
-                    
         }
-    }//GEN-LAST:event_jTextFieldPesquisarProdutoActionPerformed
-
-    private void jButtonPesquisarAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPesquisarAtualizarActionPerformed
-            ProdutoDAO DAO = new ProdutoDAO();
-            Produto produto = new Produto();
-            produto = DAO.buscaPorCodigo((int) jComboBoxPesquisarCodigo.getSelectedItem());                       
-            produto.setNome(jTextFieldPesquisarProduto.getText());
-            String getValueValor = jTextFieldPesquisarPreco.getText();
-            double valor = Double.parseDouble(getValueValor);
-            produto.setValor(valor);
-            String getValueQuantidade = jTextFieldPesquisarQuantidade.getText();
-            int quantidade = Integer.parseInt(getValueQuantidade);
-            produto.setQuantidade(quantidade); 
-            DAO.atualizar(produto);
-            JOptionPane.showConfirmDialog(null, 
-                "Produto atualizado com sucesso!", "Mensagem", JOptionPane.DEFAULT_OPTION);
-            refreshTEX();
-    }//GEN-LAST:event_jButtonPesquisarAtualizarActionPerformed
-
-    private void jButtonAtualisarSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAtualisarSalvarActionPerformed
-            ProdutoDAO DAO = new ProdutoDAO();
-            Produto produto = new Produto();
-            //produto = DAO.buscaPorCodigo((int) jComboBoxPesquisarCodigo.getSelectedItem());                       
-            produto.setNome(jTextFieldPesquisarProduto.getText());
-            String getValueValor = jTextFieldPesquisarPreco.getText();
-            double valor = Double.parseDouble(getValueValor);
-            produto.setValor(valor);
-            String getValueQuantidade = jTextFieldPesquisarQuantidade.getText();
-            int quantidade = Integer.parseInt(getValueQuantidade);
-            produto.setQuantidade(quantidade); 
-            DAO.inserir(produto);
-            JOptionPane.showConfirmDialog(null, 
-                "Produto Adicionado com sucesso!", "Mensagem", JOptionPane.DEFAULT_OPTION);
-            refreshTEX();
-    }//GEN-LAST:event_jButtonAtualisarSalvarActionPerformed
-
-    private void jButtonPesquisarNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPesquisarNovoActionPerformed
-        jComboBoxPesquisarCodigo.setSelectedIndex(-1);
-        jTextFieldPesquisarProduto.setText(null);
-        jTextFieldPesquisarPreco.setText(null);
-        jTextFieldPesquisarQuantidade.setText(null);        
-    }//GEN-LAST:event_jButtonPesquisarNovoActionPerformed
-
-    private void jButtonAtualisarRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAtualisarRemoverActionPerformed
-            ProdutoDAO DAO = new ProdutoDAO();	  		
-            DAO.remover((int) jComboBoxPesquisarCodigo.getSelectedItem());
-            JOptionPane.showConfirmDialog(null, 
-                "Produto removido com sucesso!", "Mensagem", JOptionPane.DEFAULT_OPTION);  
-            refreshTEX();
-    }//GEN-LAST:event_jButtonAtualisarRemoverActionPerformed
-
-    private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButton2ActionPerformed
+    }//GEN-LAST:event_jTablePesquisarMouseClicked
 
     /**
      * @param args the command line arguments
@@ -734,22 +853,19 @@ public class pdvUI extends javax.swing.JFrame {
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButtonAtualisarRemover;
-    private javax.swing.JButton jButtonAtualisarSalvar;
     private javax.swing.JButton jButtonBuscasPesquisar;
     private javax.swing.JButton jButtonPesquisarAtualizar;
-    private javax.swing.JButton jButtonPesquisarNovo;
+    private javax.swing.JButton jButtonPesquisarCadastrar;
     private javax.swing.JButton jButtonVendasAdicionar;
     private javax.swing.JButton jButtonVendasCancelar;
     private javax.swing.JButton jButtonVendasFinaliza;
     private javax.swing.JComboBox<Object> jComboBoxCodigo;
-    private javax.swing.JComboBox<Object> jComboBoxPesquisarCodigo;
     private javax.swing.JComboBox<String> jComboBoxVendasNome;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabelVendasValor;
@@ -768,10 +884,13 @@ public class pdvUI extends javax.swing.JFrame {
     private javax.swing.JRadioButton jRadioButton3;
     private javax.swing.JRadioButton jRadioButton4;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane2;
+    private javax.swing.JTable jTablePesquisar;
     private javax.swing.JTable jTableVendas;
+    private javax.swing.JTextField jTextFieldPesquisarNome;
+    private javax.swing.JTextField jTextFieldPesquisarPesquisar;
     private javax.swing.JTextField jTextFieldPesquisarPreco;
-    private javax.swing.JTextField jTextFieldPesquisarProduto;
     private javax.swing.JTextField jTextFieldPesquisarQuantidade;
     private javax.swing.JTextField jTextFieldlVendasDescontos;
     private javax.swing.JTextField jTextFieldlVendasImpostos;

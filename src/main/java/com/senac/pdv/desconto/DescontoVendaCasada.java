@@ -6,11 +6,11 @@ import com.senac.pdv.modelo.Venda;
 public class DescontoVendaCasada extends Desconto {
 
 	@Override
-	public double getValor(Venda venda) {
+	public double getPreco(Venda venda) {
 		if (venda.temProduto("Desktop") && venda.temProduto("Monitor")) {
 			return venda.calcularValorProdutos()*0.03;
 		}
-		return proximo.getValor(venda);
+		return proximo.getPreco(venda);
 	}
 
 	@Override

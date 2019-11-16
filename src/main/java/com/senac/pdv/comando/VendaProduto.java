@@ -48,7 +48,7 @@ public class VendaProduto implements Comando {
                         Produto prodSET = new Produto();
                         prodSET.setId(prodGET.getId());
                         prodSET.setNome(prodGET.getNome());
-                        prodSET.setValor(prodGET.getValor()* quantidade);
+                        prodSET.setPreco(prodGET.getPreco()* quantidade);
                         prodSET.setQuantidade(prodGET.getQuantidade());
                         venda.adicionarProduto(prodSET);
                     }             

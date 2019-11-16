@@ -5,7 +5,7 @@ import com.senac.pdv.modelo.Venda;
 
 public class SemDesconto extends Desconto {
 	
-	public double getValor(Venda venda) {
+	public double getPreco(Venda venda) {
 		return 0;
 	}
 	

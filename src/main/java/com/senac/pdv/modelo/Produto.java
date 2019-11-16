@@ -23,11 +23,11 @@ public class Produto {
 		this.nome = nome;
 	}
 
-	public Double getValor() {
+	public Double getPreco() {
 		return valor;
 	}
 
-	public void setValor(Double valor) {
+	public void setPreco(Double valor) {
 		this.valor = valor;
 	}
 
@@ -43,7 +43,7 @@ public class Produto {
 		return new StringBuffer()
 				.append(String.format("\nCodigo: %s", getId()))
 				.append(String.format("\nNome: %s", getNome()))
-				.append(String.format("\nValor: %s", getValor()))
+				.append(String.format("\nValor: %s", getPreco()))
 				.append(String.format("\nQuantidade: %s", getQuantidade()))
 				.toString();
 	}

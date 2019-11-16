@@ -21,7 +21,7 @@ public class CadastrarProduto implements Comando {
 	 	             	
 		System.out.println("Digite o valor do produto: ");
 		scanner.nextLine();
-		produto.setValor(scanner.nextDouble());		
+		produto.setPreco(scanner.nextDouble());		
                 
 		System.out.println("Digite a Quantidade do produto: ");
 		produto.setQuantidade(scanner.nextInt());

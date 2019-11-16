@@ -5,11 +5,11 @@ import com.senac.pdv.modelo.Venda;
 
 public class DescontoValorAlto extends Desconto {
 	
-	public double getValor(Venda venda) {
+	public double getPreco(Venda venda) {
 		if(venda.calcularValorProdutos() > 5000) {
 			return venda.calcularValorProdutos()*0.2;
 		}
-		return proximo.getValor(venda);
+		return proximo.getPreco(venda);
 	}
 	
 	public void setProximo(Desconto proximo) {

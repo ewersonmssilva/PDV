@@ -38,16 +38,16 @@ public class Venda {
 	
 	public double calcularValorProdutos() {
 		return produtos.stream()
-				.map(Produto::getValor)
+				.map(Produto::getPreco)
 				.reduce(0.0, Double::sum);
 	}
 	
 	public double calcularImposto() {
-		return imposto.getValor(this);
+		return imposto.getPreco(this);
 	}
 	
 	public double calcularDesconto() {
-		return desconto.getValor(this);
+		return desconto.getPreco(this);
 	}
 	
 	public double calcularValorTotal() {
@@ -69,7 +69,7 @@ public class Venda {
 	
 	public boolean produtoValorMaior(double valor) {
 		for (Produto produto : produtos) {
-			if(produto.getValor() > valor) {
+			if(produto.getPreco() > valor) {
 				return true;
 			}
 		}

@@ -8,19 +8,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.senac.pdv.modelo.Produto;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 
 public class ProdutoDAO {
 	
 	public void inserir(Produto produto) {
 		try (Connection conn = ConnectionPDVFactory.getConnection()) {
-			String sql = "INSERT INTO produto (nome, preco, quantidade)" +
+			String sql = "INSERT INTO produto (nome, preco, qtd)" +
 							"VALUES (?, ?, ?)";
 
 			PreparedStatement ps = conn.prepareStatement(sql); // esta pedindo para preparar a conexão
 			//ps.setLong(1, produto.getId()); // vai pegar o primeiro parametro ? e colocar o id por isso setInt
 			ps.setString(1, produto.getNome());
-			ps.setDouble(2, produto.getValor());
+			ps.setDouble(2, produto.getPreco());
 			ps.setDouble(3, produto.getQuantidade());
 
 			ps.executeUpdate();
@@ -30,33 +33,44 @@ public class ProdutoDAO {
 	}
 
 	public void atualizar(Produto produto) {
-		try (Connection conn = ConnectionPDVFactory.getConnection()) {
-			String sql = "UPDATE produto SET " +
-							"nome = (?), " +
-							"preco = (?), " +
-							"quantidade = (?) " +
-						"WHERE codigo = (?)";
+                Connection con = ConnectionPDVFactory.getConnection();
 
-			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setString(1, produto.getNome());
-			ps.setDouble(2, produto.getValor());
-			ps.setInt(3, produto.getQuantidade());
-			ps.setInt(4, produto.getId());
-			ps.executeUpdate();
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
-		}
+                PreparedStatement stmt = null;
+
+                try {
+                    stmt = con.prepareStatement("UPDATE produto SET nome = ? ,qtd = ?,preco = ? WHERE id = ?");
+                    stmt.setString(1, produto.getNome());
+                    stmt.setInt(2, produto.getQuantidade());
+                    stmt.setDouble(3, produto.getPreco());
+                    stmt.setInt(4, produto.getId());
+
+                    stmt.executeUpdate();
+
+                    JOptionPane.showMessageDialog(null, "Atualizado com sucesso!");
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(null, "Erro ao atualizar: " + ex);
+                } finally {
+                    ConnectionPDVFactory.closeConnection(con, stmt);
+                }
 	}
 	
-	public void remover(int id) {
-		try (Connection conn = ConnectionPDVFactory.getConnection()) {
-			String sql = "DELETE FROM produto WHERE codigo = (?)";
-			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setInt(1, id);
-			ps.executeUpdate();
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
-		}
+	public void remover(Produto produto) {
+                Connection con = ConnectionPDVFactory.getConnection();
+
+                PreparedStatement stmt = null;
+
+                try {
+                    stmt = con.prepareStatement("DELETE FROM produto WHERE id = ?");
+                    stmt.setInt(1, produto.getId());
+
+                    stmt.executeUpdate();
+
+                    JOptionPane.showMessageDialog(null, "Excluido com sucesso!");
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(null, "Erro ao excluir: " + ex);
+                } finally {
+                    ConnectionPDVFactory.closeConnection(con, stmt);
+                }
 	}
 	
 	
@@ -73,7 +87,7 @@ public class ProdutoDAO {
 				Produto produto = new Produto();
 				produto.setId(rs.getInt(1));
 				produto.setNome(rs.getString(2));
-				produto.setValor(rs.getDouble(3));
+				produto.setPreco(rs.getDouble(3));
 				produto.setQuantidade(rs.getInt(4));
 				produtos.add(produto);
 			}
@@ -97,7 +111,7 @@ public class ProdutoDAO {
 				Produto produto = new Produto();
 				produto.setId(rs.getInt(1));
 				produto.setNome(rs.getString(2));
-				produto.setValor(rs.getDouble(3));
+				produto.setPreco(rs.getDouble(3));
 				produto.setQuantidade(rs.getInt(4));
 				produtos.add(produto);
 			}
@@ -111,7 +125,7 @@ public class ProdutoDAO {
 	
 	public Produto buscaPorCodigo(int id) {
 		try (Connection conn = ConnectionPDVFactory.getConnection()) {
-			String sql = "SELECT * FROM produto WHERE codigo = ?";
+			String sql = "SELECT * FROM produto WHERE id = ?";
 
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setInt(1, id);
@@ -121,7 +135,7 @@ public class ProdutoDAO {
 			while(rs.next()) {
 				produto.setId(rs.getInt(1));
 				produto.setNome(rs.getString(2));
-				produto.setValor(rs.getDouble(3));
+				produto.setPreco(rs.getDouble(3));
 				produto.setQuantidade(rs.getInt(4));
 			}
 			return produto;
@@ -148,7 +162,7 @@ public class ProdutoDAO {
 				Produto p = new Produto();
 				p.setId(rs.getInt(1));
 				p.setNome(rs.getString(2));
-				p.setValor(rs.getDouble(3));
+				p.setPreco(rs.getDouble(3));
 				p.setQuantidade(rs.getInt(4));
 				produtos.add(p);
 			}
@@ -158,5 +172,74 @@ public class ProdutoDAO {
 		}
 		return new ArrayList<>();
 	}
+        
+        public List<Produto> read() {
+
+        Connection con = ConnectionPDVFactory.getConnection();
+        
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        List<Produto> produtos = new ArrayList<>();
+
+        try {
+            stmt = con.prepareStatement("SELECT * FROM produto");
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+
+                Produto produto = new Produto();
+
+                produto.setId(rs.getInt("id"));
+                produto.setNome(rs.getString("nome"));
+                produto.setQuantidade(rs.getInt("qtd"));
+                produto.setPreco(rs.getDouble("preco"));
+                produtos.add(produto);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ProdutoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            ConnectionPDVFactory.closeConnection(con, stmt, rs);
+        }
+
+        return produtos;
+        }
+        
+        public List<Produto> readForDesc(String desc) {
+
+        Connection con = ConnectionPDVFactory.getConnection();
+        
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        List<Produto> produtos = new ArrayList<>();
+
+        try {
+            stmt = con.prepareStatement("SELECT * FROM produto WHERE nome LIKE ?");
+            stmt.setString(1, "%"+desc+"%");
+            
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+
+                Produto produto = new Produto();
+
+                produto.setId(rs.getInt("id"));
+                produto.setNome(rs.getString("nome"));
+                produto.setQuantidade(rs.getInt("qtd"));
+                produto.setPreco(rs.getDouble("preco"));
+                produtos.add(produto);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ProdutoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            ConnectionPDVFactory.closeConnection(con, stmt, rs);
+        }
+
+        return produtos;
+
+        }
 
 }

@@ -6,11 +6,11 @@ import com.senac.pdv.modelo.Venda;
 public class DescontoGamer extends Desconto {
 	
         @Override
-	public double getValor(Venda venda) {
+	public double getPreco(Venda venda) {
 		if(venda.temProduto("Notebook Gamer")) {
 			return venda.calcularValorProdutos()*0.25;
 		}
-		return proximo.getValor(venda);
+		return proximo.getPreco(venda);
 	}
 
         @Override
