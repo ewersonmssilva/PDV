@@ -40,7 +40,7 @@ public class PDVTeste {
         comandos.put(5, new BuscaProdutoNome());
         comandos.put(6, new BuscaProdutoPreco());
         comandos.put(7, new ListarProdutos());
-        comandos.put(8, new VendaProduto());
+        comandos.put(8, new VendaProduto_CMD());
         return comandos;
     }
 

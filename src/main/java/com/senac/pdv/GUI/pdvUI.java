@@ -8,7 +8,17 @@ package com.senac.pdv.GUI;
 import com.senac.pdv.dao.ProdutoDAO;
 import com.senac.pdv.comando.VendaProduto;
 import com.senac.pdv.dao.ProdutoDAO;
+import com.senac.pdv.desconto.Desconto;
+import com.senac.pdv.desconto.DescontoGamer;
+import com.senac.pdv.desconto.DescontoGrandeQuantidade;
+import com.senac.pdv.desconto.DescontoProdutoValorAlto;
+import com.senac.pdv.desconto.DescontoValorAlto;
+import com.senac.pdv.desconto.DescontoVendaCasada;
+import com.senac.pdv.desconto.SemDesconto;
+import com.senac.pdv.imposto.ICMSSP;
+import com.senac.pdv.imposto.IPL;
 import com.senac.pdv.modelo.Produto;
+import com.senac.pdv.modelo.Venda;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -22,6 +32,7 @@ public class pdvUI extends javax.swing.JFrame {
     /**
      * Creates new form pdvUI
      */
+    int row = 0;
     public pdvUI() {
         initComponents();
         
@@ -29,15 +40,13 @@ public class pdvUI extends javax.swing.JFrame {
         jTablePesquisar.setRowSorter(new TableRowSorter(modelo));
         
         refresh();
-            /*   
+              
             ProdutoDAO DAO = new ProdutoDAO();
-
             for(Produto prod : DAO.listar()) {                    
-                Produto prodGET = (prod);
-                jComboBoxPesquisarCodigo.addItem(prodGET.getId());
+                Produto prodGET = (prod);              
                 jComboBoxCodigo.addItem(prodGET.getId());
                 jComboBoxVendasNome.addItem(prodGET.getNome());
-            } */
+            } 
         
     }
     
@@ -56,16 +65,6 @@ public class pdvUI extends javax.swing.JFrame {
             });
 
         }
-
-        /*
-            ProdutoDAO DAO = new ProdutoDAO();
-
-            for(Produto prod : DAO.listar()) {                    
-                Produto prodGET = (prod);
-                jComboBoxPesquisarCodigo.addItem(prodGET.getId());
-                jComboBoxCodigo.addItem(prodGET.getId());
-                jComboBoxVendasNome.addItem(prodGET.getNome());
-            } */
     }
     
     public void readJTableForDesc(String desc) {
@@ -74,28 +73,31 @@ public class pdvUI extends javax.swing.JFrame {
         modelo.setNumRows(0);
         ProdutoDAO pdao = new ProdutoDAO();
 
-        for (Produto p : pdao.readForDesc(desc)) {
+        for (Produto produto : pdao.readForDesc(desc)) {
 
             modelo.addRow(new Object[]{
-                p.getId(),
-                p.getNome(),
-                p.getQuantidade(),
-                p.getPreco()
+                produto.getId(),
+                produto.getNome(),
+                produto.getQuantidade(),
+                produto.getPreco()
             });
 
         }        
 
     }
     
-    public void descontoSelecionado(/*ItemEvent event*/) {
+    public String descontoSelecionado() {
+        String selecao = null;
+        
         if(jRadioButton1.isSelected())
-            JOptionPane.showMessageDialog(null,"teste1");
+            selecao = "d0";
         else if(jRadioButton2.isSelected())
-            JOptionPane.showMessageDialog(null,"teste2");
+            selecao = "d2";
         else if(jRadioButton3.isSelected())
-            JOptionPane.showMessageDialog(null,"teste3");
+            selecao = "d3";
         else if(jRadioButton4.isSelected())
-            JOptionPane.showMessageDialog(null,"teste4");
+            selecao = "d4";
+        return selecao;
   }
 
     /**
@@ -306,6 +308,12 @@ public class pdvUI extends javax.swing.JFrame {
         buttonGroup1.add(jRadioButton4);
         jRadioButton4.setText("Desconto Grande Quant.");
 
+        jTextFieldlVendasImpostos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldlVendasImpostosActionPerformed(evt);
+            }
+        });
+
         jTextFieldlVendasDescontos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextFieldlVendasDescontosActionPerformed(evt);
@@ -322,6 +330,11 @@ public class pdvUI extends javax.swing.JFrame {
         jLabellVendasTotal.setText("Total:");
 
         jComboBoxVendasNome.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "<Selecione>" }));
+        jComboBoxVendasNome.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxVendasNomeActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelVendasLayout = new javax.swing.GroupLayout(jPanelVendas);
         jPanelVendas.setLayout(jPanelVendasLayout);
@@ -334,11 +347,6 @@ public class pdvUI extends javax.swing.JFrame {
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 588, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(jPanelVendasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanelVendasLayout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButtonVendasCancelar)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButtonVendasFinaliza))
-                            .addGroup(jPanelVendasLayout.createSequentialGroup()
                                 .addGap(26, 26, 26)
                                 .addGroup(jPanelVendasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabelVendasValor)
@@ -348,24 +356,30 @@ public class pdvUI extends javax.swing.JFrame {
                                     .addComponent(jTextFieldlVendasDescontos, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabellVendasDescontos)
                                     .addComponent(jTextFieldlVendasTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabellVendasTotal)))))
+                                    .addComponent(jLabellVendasTotal)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelVendasLayout.createSequentialGroup()
+                                .addGap(49, 49, 49)
+                                .addGroup(jPanelVendasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jRadioButton4)
+                                    .addComponent(jRadioButton2)
+                                    .addComponent(jRadioButton1)
+                                    .addComponent(jRadioButton3)))
+                            .addGroup(jPanelVendasLayout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButtonVendasCancelar)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButtonVendasFinaliza))))
                     .addGroup(jPanelVendasLayout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jComboBoxCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(30, 30, 30)
                         .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jComboBoxVendasNome, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(14, 14, 14)
-                        .addGroup(jPanelVendasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jRadioButton4)
-                            .addComponent(jRadioButton2)
-                            .addComponent(jRadioButton1)
-                            .addGroup(jPanelVendasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jButtonVendasAdicionar)
-                                .addComponent(jRadioButton3)))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButtonVendasAdicionar)))
+                .addContainerGap(35, Short.MAX_VALUE))
         );
         jPanelVendasLayout.setVerticalGroup(
             jPanelVendasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -377,38 +391,39 @@ public class pdvUI extends javax.swing.JFrame {
                     .addComponent(jComboBoxVendasNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
                     .addComponent(jLabel1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
-                .addGroup(jPanelVendasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelVendasLayout.createSequentialGroup()
-                        .addComponent(jRadioButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jRadioButton2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jRadioButton3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jRadioButton4)
-                        .addGap(50, 50, 50)
-                        .addComponent(jLabelVendasValor)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextFieldlVendasValor, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabellVendasImpostos)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextFieldlVendasImpostos, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(4, 4, 4)
-                        .addComponent(jLabellVendasDescontos)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextFieldlVendasDescontos, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabellVendasTotal)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextFieldlVendasTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 362, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jRadioButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jRadioButton2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jRadioButton3)
+                .addGap(1, 1, 1)
+                .addComponent(jRadioButton4)
+                .addGap(50, 50, 50)
+                .addComponent(jLabelVendasValor)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextFieldlVendasValor, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabellVendasImpostos)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextFieldlVendasImpostos, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(4, 4, 4)
+                .addComponent(jLabellVendasDescontos)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextFieldlVendasDescontos, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabellVendasTotal)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextFieldlVendasTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
                 .addGroup(jPanelVendasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonVendasFinaliza)
                     .addComponent(jButtonVendasCancelar))
                 .addGap(16, 16, 16))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelVendasLayout.createSequentialGroup()
+                .addContainerGap(85, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 362, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(60, 60, 60))
         );
 
         jTabbedPane2.addTab("Vendas", jPanelVendas);
@@ -533,24 +548,24 @@ public class pdvUI extends javax.swing.JFrame {
                         .addGroup(jPanelBuscasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanelBuscasLayout.createSequentialGroup()
                                 .addComponent(jTextFieldPesquisarNome, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel9)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jTextFieldPesquisarPreco, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGap(33, 33, 33)
                                 .addComponent(jLabel10)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jTextFieldPesquisarQuantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanelBuscasLayout.createSequentialGroup()
                                 .addComponent(jButtonPesquisarCadastrar, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(45, 45, 45)
+                                .addGap(28, 28, 28)
                                 .addComponent(jButtonPesquisarAtualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(32, 32, 32)
+                                .addGap(28, 28, 28)
                                 .addComponent(jButtonAtualisarRemover, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jTextFieldPesquisarPesquisar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButtonBuscasPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGap(39, 39, 39)
+                                .addComponent(jTextFieldPesquisarPesquisar)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonBuscasPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 760, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 35, Short.MAX_VALUE))
         );
@@ -777,7 +792,59 @@ public class pdvUI extends javax.swing.JFrame {
 
     private void jButtonVendasAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVendasAdicionarActionPerformed
 
-        Object _ADDquantidade = JOptionPane.showInputDialog("Digite a quantidade", "Aqui!");
+        Object _ADDquantidade = JOptionPane.showInputDialog("Digite a quantidade", "");
+        
+        
+        DefaultTableModel modelo = (DefaultTableModel) jTableVendas.getModel();
+        modelo.setNumRows(row);
+        ProdutoDAO pdao = new ProdutoDAO();
+            modelo.addRow(new Object[]{
+                10,
+                10,
+                10,
+                25
+            });
+            row++;
+
+         
+        
+        
+        
+        
+                Desconto d1 = new DescontoGamer();
+		Desconto d2 = new DescontoValorAlto();
+		Desconto d3 = new DescontoGrandeQuantidade();
+		Desconto d4 = new DescontoProdutoValorAlto();
+		Desconto d5 = new DescontoVendaCasada();
+		Desconto d0 = new SemDesconto();
+		d1.setProximo(d2);
+		d2.setProximo(d3);
+		d3.setProximo(d4);
+		d4.setProximo(d5);
+		d5.setProximo(d0);   
+                
+                int id = 0;
+                double preco = 0;
+                
+		Venda venda = new Venda();            
+
+		Produto p1 = new Produto();
+		p1.setId(id);
+		p1.setPreco(preco);
+		venda.adicionarProduto(p1);
+
+		venda.setImposto(new ICMSSP());
+		venda.setImposto(new IPL());
+		venda.setDesconto(d0);
+                
+		venda.getDesconto();
+               
+        
+        
+        
+        
+        //VendaProd(10, 10.2, descontoSelecionado());
+        descontoSelecionado();
     }//GEN-LAST:event_jButtonVendasAdicionarActionPerformed
 
     private void jComboBoxCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxCodigoActionPerformed
@@ -813,6 +880,14 @@ public class pdvUI extends javax.swing.JFrame {
 
         }
     }//GEN-LAST:event_jTablePesquisarMouseClicked
+
+    private void jComboBoxVendasNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxVendasNomeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBoxVendasNomeActionPerformed
+
+    private void jTextFieldlVendasImpostosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldlVendasImpostosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldlVendasImpostosActionPerformed
 
     /**
      * @param args the command line arguments

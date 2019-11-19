@@ -2,6 +2,7 @@ package com.senac.pdv.comando;
 
 import com.senac.pdv.dao.ProdutoDAO;
 import com.senac.pdv.modelo.Produto;
+import com.senac.pdv.modelo.Venda;
 import java.util.Scanner;
 
 public class CadastrarProduto implements Comando {
@@ -27,5 +28,8 @@ public class CadastrarProduto implements Comando {
 		produto.setQuantidade(scanner.nextInt());
 		DAO.inserir(produto);
 	}
+
+ 
+
 	
 }
