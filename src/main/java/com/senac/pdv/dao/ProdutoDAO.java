@@ -242,4 +242,25 @@ public class ProdutoDAO {
 
         }
 
+        
+        
+        //=======================================================//
+        //   VendasDAO
+        	public void inserirVenda(Produto produto) {
+		try (Connection conn = ConnectionPDVFactory.getConnection()) {
+			String sql = "INSERT INTO vendas (id, nome, qtd, preco, desconto)" +
+							"VALUES (?, ?, ?, ?, ?)";
+
+			PreparedStatement ps = conn.prepareStatement(sql); // esta pedindo para preparar a conexão
+			ps.setInt(1, produto.getId()); // vai pegar o primeiro parametro ? e colocar o id por isso setInt
+			ps.setString(2, produto.getNome());
+			ps.setDouble(3, produto.getPreco());
+			ps.setInt(4, produto.getQuantidade());
+                        ps.setInt(5, produto.getDesconto());
+
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
 }

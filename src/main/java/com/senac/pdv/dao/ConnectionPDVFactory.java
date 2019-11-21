@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 public class ConnectionPDVFactory {
 
     private static final String DRIVER = "com.mysql.jdbc.Driver";
-    private static final String URL = "jdbc:mysql://162.241.2.208:3306/wilcsfib_pdv2";
+    private static final String URL = "jdbc:mysql://162.241.2.208:3306/wilcsfib_pdv";
     private static final String USER = "wilcsfib_pdv";
     private static final String PASS = "poopdv";
 

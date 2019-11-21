@@ -76,11 +76,22 @@ public class Venda {
 		return false;
 	}
 	
+        @Override
 	public String toString() {
+            return calcularValorProdutos() +
+                                ";" + calcularImposto() +
+				";" + calcularDesconto() +
+				";" + calcularValorTotal();            
+            
+            
+                     
+            //return calcularImposto + calcularValorProdutos;          
+            /*
 		return "Valor dos produtos: " + calcularValorProdutos() +
 				"\nValor do imposto: " + calcularImposto() +
 				"\nValor do desconto: " + calcularDesconto() +
 				"\nValor total: " + calcularValorTotal();
+            */
 	}
 
 }

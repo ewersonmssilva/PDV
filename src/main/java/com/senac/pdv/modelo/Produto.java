@@ -6,6 +6,7 @@ public class Produto {
 	private String nome;
 	private Double valor;
 	private Integer quantidade;
+        private Integer desconto;
 
 	public Integer getId() {
 		return id;
@@ -37,6 +38,14 @@ public class Produto {
 
 	public void setQuantidade(Integer quantidade) {
 		this.quantidade = quantidade;
+	}
+
+	public Integer getDesconto() {
+		return desconto;
+	}
+        
+        public void setDesconto(Integer desconto) {
+		this.desconto = desconto;
 	}
 
 	public String toString() {
