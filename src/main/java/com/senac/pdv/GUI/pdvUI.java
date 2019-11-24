@@ -42,6 +42,8 @@ public class pdvUI extends javax.swing.JFrame {
     public pdvUI() {
         initComponents();
         
+        jTextFieldlVendasValor.setText("0");
+        
                 DefaultTableModel modelo = (DefaultTableModel) jTablePesquisar.getModel();
         jTablePesquisar.setRowSorter(new TableRowSorter(modelo));
         
@@ -91,6 +93,25 @@ public class pdvUI extends javax.swing.JFrame {
         }        
 
     }
+    
+    public void readJTableForId(Integer id) {
+        
+        DefaultTableModel modelo = (DefaultTableModel) jTableVendas.getModel();
+        modelo.setNumRows(0);
+        ProdutoDAO pdao = new ProdutoDAO();
+
+        for (Produto produto : pdao.readForId(id)) {
+
+            modelo.addRow(new Object[]{
+                produto.getId(),
+                produto.getNome(),
+                produto.getQuantidade(),
+                produto.getPreco()
+            });
+
+        }        
+
+    }    
     
     public int descontoSelecionado() {
         int selecao = 0;
@@ -235,11 +256,11 @@ public class pdvUI extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Código", "Produto", "Preço Unit.", "Quantidade"
+                "Código", "Produto", "Quantidade", "Preço Unit."
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.Double.class, java.lang.Integer.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class, java.lang.Double.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false
@@ -260,12 +281,12 @@ public class pdvUI extends javax.swing.JFrame {
             jTableVendas.getColumnModel().getColumn(0).setPreferredWidth(70);
             jTableVendas.getColumnModel().getColumn(0).setMaxWidth(70);
             jTableVendas.getColumnModel().getColumn(1).setResizable(false);
-            jTableVendas.getColumnModel().getColumn(2).setMinWidth(100);
-            jTableVendas.getColumnModel().getColumn(2).setPreferredWidth(100);
-            jTableVendas.getColumnModel().getColumn(2).setMaxWidth(100);
-            jTableVendas.getColumnModel().getColumn(3).setMinWidth(70);
-            jTableVendas.getColumnModel().getColumn(3).setPreferredWidth(70);
-            jTableVendas.getColumnModel().getColumn(3).setMaxWidth(70);
+            jTableVendas.getColumnModel().getColumn(2).setMinWidth(70);
+            jTableVendas.getColumnModel().getColumn(2).setPreferredWidth(70);
+            jTableVendas.getColumnModel().getColumn(2).setMaxWidth(70);
+            jTableVendas.getColumnModel().getColumn(3).setMinWidth(100);
+            jTableVendas.getColumnModel().getColumn(3).setPreferredWidth(100);
+            jTableVendas.getColumnModel().getColumn(3).setMaxWidth(100);
         }
 
         jButtonVendasAdicionar.setText("Adicionar");
@@ -788,23 +809,66 @@ public class pdvUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jRadioButton1ActionPerformed
 
+    @SuppressWarnings("empty-statement")
     private void jButtonVendasAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVendasAdicionarActionPerformed
 
-        Object ADDquantidade = JOptionPane.showInputDialog("Digite a quantidade", "");
+        //Object ADDquantidade = JOptionPane.showInputDialog("Digite a quantidade", "");
+        
+        int ADDquantidade = Integer.parseInt(JOptionPane.showInputDialog("Digite a quantidade"));
+        
         //int Quant = ((Integer) ADDquantidade);
         // insere o Produto na tabela
+        
+        String getValueID = jTextFieldVendasID.getText();
+        int valorID = Integer.parseInt(getValueID);
+        
+        /*
+        ProdutoDAO DAO = new ProdutoDAO();
+        Produto teste = DAO.buscaPorCodigo(valorID);
+                      
+        
+        String[] ValoresSeparados2 = teste.toString().split(";");        
+        
+        String getValuePreco = ValoresSeparados2[1];
+        double getValueP = Double.parseDouble(getValuePreco);
+        */
+        double preco = 0;
+        
         DefaultTableModel modelo = (DefaultTableModel) jTableVendas.getModel();
-        modelo.setNumRows(row);
+        modelo.setNumRows(0);
         ProdutoDAO pdao = new ProdutoDAO();
+
+        for (Produto produto : pdao.readForId(valorID)) {
+            preco = produto.getPreco();
+            while (ADDquantidade > produto.getId()){
+                ADDquantidade = Integer.parseInt(JOptionPane.showInputDialog("Quantidade maior que o estoque, Digite a quantidade"));
+            };
             modelo.addRow(new Object[]{
-                10,
-                10,
-                58,
-                25
+                produto.getId(),
+                produto.getNome(),
+                ADDquantidade,
+                produto.getPreco()
             });
+
+        }
+        
+        
+        
+        /*
+        DefaultTableModel modelo = (DefaultTableModel) jTableVendas.getModel();
+        modelo.setNumRows(row);        
+            modelo.addRow(new Object[]{
+                valorID,
+                88888,
+                ADDquantidade,                
+                getValueP
+            }); */
             row++;
 
-         
+               // produto.getId(),
+               // produto.getNome(),
+               // produto.getQuantidade(),
+               // produto.getPreco()
         
         
         // Calcula os valores de impostos, totais e descontos
@@ -822,23 +886,29 @@ public class pdvUI extends javax.swing.JFrame {
                 }            
                 
                 int id = 10;
-                double preco = 50;
                 
+                //String valorVenda = jTextFieldlVendasValor.getText();
+                //double d = Double.valueOf(valorVenda); 
+                
+                String getValueValor = jTextFieldlVendasValor.getText();
+                double valor = Double.parseDouble(getValueValor);
+                
+               // double preco = 50.1 + valor;
                 
 		Venda venda = new Venda();            
 
 		Produto p1 = new Produto();
 		p1.setId(id);
-		p1.setPreco(preco);
+		p1.setPreco(preco + valor);
 		venda.adicionarProduto(p1);
 
-		venda.setImposto(new ICMSSP());
+		//venda.setImposto(new ICMSSP());
 		venda.setImposto(new IPL());
 		venda.setDesconto(d1);
-                
-               
-                
+                               
 		String[] ValoresSeparados = venda.toString().split(";");
+                
+                
                
         // Insere os valores nos campos Valor, Impostos, Descontos e Valor Total
             jTextFieldlVendasValor.setText(ValoresSeparados[0]);
