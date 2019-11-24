@@ -48,12 +48,18 @@ public class Produto {
 		this.desconto = desconto;
 	}
 
-	public String toString() {
-		return new StringBuffer()
+        @Override
+	public String toString() {            
+		return getId() +
+				";" + getNome() +
+				";" + getPreco() +
+				";" + getQuantidade();
+                
+	/*	return new StringBuffer()
 				.append(String.format("\nCodigo: %s", getId()))
 				.append(String.format("\nNome: %s", getNome()))
 				.append(String.format("\nValor: %s", getPreco()))
 				.append(String.format("\nQuantidade: %s", getQuantidade()))
-				.toString();
+				.toString();    */
 	}
 }

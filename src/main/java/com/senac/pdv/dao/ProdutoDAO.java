@@ -246,7 +246,7 @@ public class ProdutoDAO {
         
         //=======================================================//
         //   VendasDAO
-        	public void inserirVenda(Produto produto) {
+        public void inserirVenda(Produto produto) {
 		try (Connection conn = ConnectionPDVFactory.getConnection()) {
 			String sql = "INSERT INTO vendas (id, nome, qtd, preco, desconto)" +
 							"VALUES (?, ?, ?, ?, ?)";
@@ -263,4 +263,60 @@ public class ProdutoDAO {
 			throw new RuntimeException(e);
 		}
 	}
+ 
+	public Produto idVenda(int id) {
+		try (Connection conn = ConnectionPDVFactory.getConnection()) {
+			String sql = "SELECT max(id) FROM vendas";
+
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, id);
+			ResultSet rs = ps.executeQuery();
+
+			Produto produto = new Produto();
+			//while(rs.next()) {
+				produto.setId(rs.getInt(1));	
+			//}
+			return produto;
+
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+        public List<Produto> readForId(Integer id) {
+
+        Connection con = ConnectionPDVFactory.getConnection();
+        
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        List<Produto> produtos = new ArrayList<>();
+
+        try {
+            stmt = con.prepareStatement("SELECT * FROM produto WHERE id LIKE ?");
+            stmt.setString(1, "%"+id+"%");
+            
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+
+                Produto produto = new Produto();
+
+                produto.setId(rs.getInt("id"));
+                produto.setNome(rs.getString("nome"));
+                produto.setQuantidade(rs.getInt("qtd"));
+                produto.setPreco(rs.getDouble("preco"));
+                produtos.add(produto);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ProdutoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            ConnectionPDVFactory.closeConnection(con, stmt, rs);
+        }
+
+        return produtos;
+
+        }
+        
 }
