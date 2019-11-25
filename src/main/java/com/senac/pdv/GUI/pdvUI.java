@@ -27,6 +27,7 @@ import com.senac.pdv.imposto.ICMSSP;
 import com.senac.pdv.imposto.IPL;
 import com.senac.pdv.modelo.Produto;
 import com.senac.pdv.modelo.Venda;
+import java.util.ArrayList;
 
 import java.util.regex.Pattern;
 /**
@@ -38,7 +39,7 @@ public class pdvUI extends javax.swing.JFrame {
     /**
      * Creates new form pdvUI
      */
-    int row = 0;
+    //int row = 0;   
     public pdvUI() {
         initComponents();
         
@@ -46,6 +47,11 @@ public class pdvUI extends javax.swing.JFrame {
         
                 DefaultTableModel modelo = (DefaultTableModel) jTablePesquisar.getModel();
         jTablePesquisar.setRowSorter(new TableRowSorter(modelo));
+        
+
+
+                
+                
         
         refresh();
               
@@ -73,6 +79,13 @@ public class pdvUI extends javax.swing.JFrame {
             });
 
         }
+    }
+
+    private void limparTabelaVendas() {
+        //while (jTableVendas.getRowCount() > 0) {
+        DefaultTableModel modelo = (DefaultTableModel) jTableVendas.getModel();
+        modelo.setNumRows(0);
+        //}
     }
     
     public void readJTableForDesc(String desc) {
@@ -234,29 +247,10 @@ public class pdvUI extends javax.swing.JFrame {
 
         jTableVendas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Código", "Produto", "Quantidade", "Preço Unit."
+                "Id", "Descrição", "Qtd.", "Preço Unit."
             }
         ) {
             Class[] types = new Class [] {
@@ -353,6 +347,17 @@ public class pdvUI extends javax.swing.JFrame {
         jComboBoxVendasNome.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBoxVendasNomeActionPerformed(evt);
+            }
+        });
+
+        jTextFieldVendasID.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldVendasIDActionPerformed(evt);
+            }
+        });
+        jTextFieldVendasID.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextFieldVendasIDKeyReleased(evt);
             }
         });
 
@@ -736,21 +741,6 @@ public class pdvUI extends javax.swing.JFrame {
             refresh();
 
         }
-        /*
-        ProdutoDAO DAO = new ProdutoDAO();
-            Produto produto = new Produto();
-     //       produto = DAO.buscaPorCodigo((int) jComboBoxPesquisarCodigo.getSelectedItem());                       
-            produto.setNome(jTextFieldPesquisarNome.getText());
-            String getValueValor = jTextFieldPesquisarPreco.getText();
-            double valor = Double.parseDouble(getValueValor);
-            produto.setPreco(valor);
-            String getValueQuantidade = jTextFieldPesquisarQuantidade.getText();
-            int quantidade = Integer.parseInt(getValueQuantidade);
-            produto.setQuantidade(quantidade); 
-            DAO.atualizar(produto);
-            JOptionPane.showConfirmDialog(null, 
-                "Produto atualizado com sucesso!", "Mensagem", JOptionPane.DEFAULT_OPTION);
-            refreshTEX(); */
     }//GEN-LAST:event_jButtonPesquisarAtualizarActionPerformed
 
     private void jButtonPesquisarCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPesquisarCadastrarActionPerformed
@@ -811,31 +801,18 @@ public class pdvUI extends javax.swing.JFrame {
 
     @SuppressWarnings("empty-statement")
     private void jButtonVendasAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVendasAdicionarActionPerformed
-
-        //Object ADDquantidade = JOptionPane.showInputDialog("Digite a quantidade", "");
-        
+ 
         int ADDquantidade = Integer.parseInt(JOptionPane.showInputDialog("Digite a quantidade"));
-        
-        //int Quant = ((Integer) ADDquantidade);
+
         // insere o Produto na tabela
         
         String getValueID = jTextFieldVendasID.getText();
         int valorID = Integer.parseInt(getValueID);
         
-        /*
-        ProdutoDAO DAO = new ProdutoDAO();
-        Produto teste = DAO.buscaPorCodigo(valorID);
-                      
-        
-        String[] ValoresSeparados2 = teste.toString().split(";");        
-        
-        String getValuePreco = ValoresSeparados2[1];
-        double getValueP = Double.parseDouble(getValuePreco);
-        */
         double preco = 0;
-        
+
         DefaultTableModel modelo = (DefaultTableModel) jTableVendas.getModel();
-        modelo.setNumRows(0);
+        modelo.setNumRows(jTableVendas.getRowCount());
         ProdutoDAO pdao = new ProdutoDAO();
 
         for (Produto produto : pdao.readForId(valorID)) {
@@ -851,25 +828,7 @@ public class pdvUI extends javax.swing.JFrame {
             });
 
         }
-        
-        
-        
-        /*
-        DefaultTableModel modelo = (DefaultTableModel) jTableVendas.getModel();
-        modelo.setNumRows(row);        
-            modelo.addRow(new Object[]{
-                valorID,
-                88888,
-                ADDquantidade,                
-                getValueP
-            }); */
-            row++;
 
-               // produto.getId(),
-               // produto.getNome(),
-               // produto.getQuantidade(),
-               // produto.getPreco()
-        
         
         // Calcula os valores de impostos, totais e descontos
                 int descontoselect = descontoSelecionado();
@@ -887,13 +846,8 @@ public class pdvUI extends javax.swing.JFrame {
                 
                 int id = 10;
                 
-                //String valorVenda = jTextFieldlVendasValor.getText();
-                //double d = Double.valueOf(valorVenda); 
-                
                 String getValueValor = jTextFieldlVendasValor.getText();
                 double valor = Double.parseDouble(getValueValor);
-                
-               // double preco = 50.1 + valor;
                 
 		Venda venda = new Venda();            
 
@@ -916,17 +870,33 @@ public class pdvUI extends javax.swing.JFrame {
             jTextFieldlVendasDescontos.setText(ValoresSeparados[2]);
             jTextFieldlVendasTotal.setText(ValoresSeparados[3]);
         
-        
-        //VendaProd(10, 10.2, descontoSelecionado());
-       
-        
-        
-        //Insere no DB
-        
     }//GEN-LAST:event_jButtonVendasAdicionarActionPerformed
 
     private void jButtonVendasFinalizaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVendasFinalizaActionPerformed
-        // TODO add your handling code here:
+        // Verifica Id de Venda        
+        ProdutoDAO DAOId = new ProdutoDAO();        
+        Produto produtoid = DAOId.idVenda();  
+            int IdVenda = produtoid.getId() + 1;
+                //System.out.println(IdVenda);        
+        
+        int row = jTableVendas.getRowCount();
+        
+        ProdutoDAO DAO = new ProdutoDAO();
+        Produto produto = new Produto();
+            //produto = DAO.buscaPorCodigo((int) jComboBoxPesquisarCodigo.getSelectedItem());  
+            
+            for(int i=0;i<row;i++){        
+                    produto.setId(IdVenda); // retorna o valor da celula linha X 0
+                    produto.setNome(jTableVendas.getValueAt(i,1).toString()); // retorna o valor da celula linha X 0
+                    produto.setQuantidade((Integer) jTableVendas.getValueAt(i,2)); // retorna o valor da celula linha X 0
+                    produto.setPreco((Double) jTableVendas.getValueAt(i,3)); // retorna o valor da celula linha X 0
+                    produto.setDesconto(1); // retorna o valor da celula linha X 0
+                    DAO.create(produto);
+            }        
+            
+           JOptionPane.showMessageDialog(null, "Venda finalizada com sucesso!");
+            row = 0;
+            limparTabelaVendas();
     }//GEN-LAST:event_jButtonVendasFinalizaActionPerformed
 
     private void jButtonVendasFinalizaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonVendasFinalizaMouseClicked
@@ -956,12 +926,28 @@ public class pdvUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jTablePesquisarMouseClicked
 
     private void jComboBoxVendasNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxVendasNomeActionPerformed
-        // TODO add your handling code here:
+        //String value = jComboBoxVendasNome.getSelectedItem().toString();        
+        ProdutoDAO DAO = new ProdutoDAO();        
+        Produto produto = DAO.buscaPorNom(jComboBoxVendasNome.getSelectedItem().toString());        
+                jTextFieldVendasID.setText(Integer.toString(produto.getId()));
+          
     }//GEN-LAST:event_jComboBoxVendasNomeActionPerformed
 
     private void jTextFieldlVendasImpostosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldlVendasImpostosActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldlVendasImpostosActionPerformed
+
+    private void jTextFieldVendasIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldVendasIDActionPerformed
+        ProdutoDAO DAO = new ProdutoDAO();        
+        Produto produto = DAO.buscaPorCodigo(Integer.parseInt(jTextFieldVendasID.getText()));        
+                jComboBoxVendasNome.setSelectedItem(produto.getNome());
+    }//GEN-LAST:event_jTextFieldVendasIDActionPerformed
+
+    private void jTextFieldVendasIDKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldVendasIDKeyReleased
+        ProdutoDAO DAO = new ProdutoDAO();        
+        Produto produto = DAO.buscaPorCodigo(Integer.parseInt(jTextFieldVendasID.getText()));        
+                jComboBoxVendasNome.setSelectedItem(produto.getNome());
+    }//GEN-LAST:event_jTextFieldVendasIDKeyReleased
 
     /**
      * @param args the command line arguments

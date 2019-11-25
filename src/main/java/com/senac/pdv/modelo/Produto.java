@@ -1,5 +1,7 @@
 package com.senac.pdv.modelo;
 
+import java.util.List;
+
 public class Produto {
 	
 	private Integer id;
@@ -62,4 +64,8 @@ public class Produto {
 				.append(String.format("\nQuantidade: %s", getQuantidade()))
 				.toString();    */
 	}
+
+   // public void getId(List<Produto> readForDesc) {
+    //    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+   // }
 }

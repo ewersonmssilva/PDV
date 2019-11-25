@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author Samuelson
+ * @author ewerson.mssilva
  */
 public class ConnectionPDVFactory {
 

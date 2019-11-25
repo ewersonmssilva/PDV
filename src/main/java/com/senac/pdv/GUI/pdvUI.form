@@ -243,10 +243,10 @@
                 <Component class="javax.swing.JTable" name="jTableVendas">
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                      <Table columnCount="4" rowCount="20">
-                        <Column editable="false" title="C&#xf3;digo" type="java.lang.Integer"/>
-                        <Column editable="false" title="Produto" type="java.lang.String"/>
-                        <Column editable="false" title="Quantidade" type="java.lang.Integer"/>
+                      <Table columnCount="4" rowCount="0">
+                        <Column editable="false" title="Id" type="java.lang.Integer"/>
+                        <Column editable="false" title="Descri&#xe7;&#xe3;o" type="java.lang.String"/>
+                        <Column editable="false" title="Qtd." type="java.lang.Integer"/>
                         <Column editable="false" title="Pre&#xe7;o Unit." type="java.lang.Double"/>
                       </Table>
                     </Property>
@@ -397,6 +397,13 @@
               </AuxValues>
             </Component>
             <Component class="javax.swing.JTextField" name="jTextFieldVendasID">
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextFieldVendasIDActionPerformed"/>
+                <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTextFieldVendasIDKeyReleased"/>
+              </Events>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value=""/>
+              </AuxValues>
             </Component>
           </SubComponents>
         </Container>

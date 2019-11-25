@@ -246,16 +246,16 @@ public class ProdutoDAO {
         
         //=======================================================//
         //   VendasDAO
-        public void inserirVenda(Produto produto) {
+       /* public void inserirVenda(Produto produto) {
 		try (Connection conn = ConnectionPDVFactory.getConnection()) {
-			String sql = "INSERT INTO vendas (id, nome, qtd, preco, desconto)" +
+			String sql = "INSERT INTO vendas (id, nome, qtd, preco, desc)" +
 							"VALUES (?, ?, ?, ?, ?)";
 
 			PreparedStatement ps = conn.prepareStatement(sql); // esta pedindo para preparar a conexão
 			ps.setInt(1, produto.getId()); // vai pegar o primeiro parametro ? e colocar o id por isso setInt
 			ps.setString(2, produto.getNome());
-			ps.setDouble(3, produto.getPreco());
-			ps.setInt(4, produto.getQuantidade());
+                        ps.setInt(4, produto.getQuantidade());
+			ps.setDouble(3, produto.getPreco());			
                         ps.setInt(5, produto.getDesconto());
 
 			ps.executeUpdate();
@@ -263,19 +263,47 @@ public class ProdutoDAO {
 			throw new RuntimeException(e);
 		}
 	}
- 
-	public Produto idVenda(int id) {
-		try (Connection conn = ConnectionPDVFactory.getConnection()) {
-			String sql = "SELECT max(id) FROM vendas";
+        */
+        public void create(Produto p) {
 
-			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setInt(1, id);
-			ResultSet rs = ps.executeQuery();
+            Connection con = ConnectionPDVFactory.getConnection();
 
-			Produto produto = new Produto();
-			//while(rs.next()) {
-				produto.setId(rs.getInt(1));	
-			//}
+            PreparedStatement stmt = null;
+
+            try {
+                stmt = con.prepareStatement("INSERT INTO `vendas`(`id`, `nome`, `qtd`, `preco`, `desc`) VALUES (?,?,?,?,?)");
+                stmt.setInt(1, p.getId());
+                stmt.setString(2, p.getNome());
+                stmt.setInt(3, p.getQuantidade());
+                stmt.setDouble(4, p.getPreco());
+                stmt.setInt(5, p.getDesconto());
+
+                stmt.executeUpdate();
+
+                //JOptionPane.showMessageDialog(null, "Salvo com sucesso!");
+            } catch (SQLException ex) {
+                System.out.println(ex);
+            } finally {
+                ConnectionPDVFactory.closeConnection(con, stmt);
+            }
+
+        }
+        
+        
+        
+        
+	public Produto idVenda() {
+        Connection con = ConnectionPDVFactory.getConnection();
+        
+        PreparedStatement stmt;
+        ResultSet rs;
+                try {
+                        stmt = con.prepareStatement("SELECT max(id) as max_id FROM vendas");
+                        rs = stmt.executeQuery();
+                        Produto produto = new Produto();
+                        if (rs.next()) {                                
+				produto.setId(rs.getInt("max_id"));
+                        }
 			return produto;
 
 		} catch (SQLException e) {
@@ -318,5 +346,27 @@ public class ProdutoDAO {
         return produtos;
 
         }
+	public Produto buscaPorNom(String desc) {
+		try (Connection conn = ConnectionPDVFactory.getConnection()) {
+			String sql = "SELECT * FROM produto WHERE nome = ?";
+
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, desc);
+			ResultSet rs = ps.executeQuery();
+
+			Produto produto = new Produto();
+			while(rs.next()) {
+				produto.setId(rs.getInt(1));
+				produto.setNome(rs.getString(2));
+				produto.setPreco(rs.getDouble(3));
+				produto.setQuantidade(rs.getInt(4));
+			}
+			return produto;
+
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	} 
+        
         
 }
