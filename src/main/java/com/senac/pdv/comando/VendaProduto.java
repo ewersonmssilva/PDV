@@ -18,7 +18,7 @@ public class VendaProduto implements Comando{
     
        // @Override
 	public Venda vendaProd(int id, double preco, String desc) {
-              	Desconto d1 = new DescontoGamer();
+              	Desconto d1 = new DescontoValorAlto();
 		Desconto d2 = new DescontoValorAlto();
 		Desconto d3 = new DescontoGrandeQuantidade();
 		Desconto d4 = new DescontoProdutoValorAlto();

@@ -346,6 +346,44 @@ public class ProdutoDAO {
         return produtos;
 
         }
+        
+        public List<Produto> lerPorIdVendas(Integer id) {
+
+        Connection con = ConnectionPDVFactory.getConnection();
+        
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        List<Produto> produtos = new ArrayList<>();
+
+        try {
+            stmt = con.prepareStatement("SELECT * FROM vendas WHERE id LIKE ?");
+            stmt.setString(1, "%"+id+"%");
+            
+            rs = stmt.executeQuery();
+
+            while (rs.next()) {
+
+                Produto produto = new Produto();
+
+                //produto.setId(rs.getInt("id"));
+                produto.setNome(rs.getString("nome"));
+                produto.setQuantidade(rs.getInt("qtd"));
+                produto.setPreco(rs.getDouble("preco"));
+                produto.setData(rs.getString("data"));
+                produtos.add(produto);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ProdutoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            ConnectionPDVFactory.closeConnection(con, stmt, rs);
+        }
+
+        return produtos;
+
+        } 
+  
 	public Produto buscaPorNom(String desc) {
 		try (Connection conn = ConnectionPDVFactory.getConnection()) {
 			String sql = "SELECT * FROM produto WHERE nome = ?";

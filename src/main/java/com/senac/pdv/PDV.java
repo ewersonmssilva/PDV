@@ -10,7 +10,7 @@ import com.senac.pdv.modelo.Venda;
 public class PDV {
 
 	public static void main(String[] args) {
-		Desconto d1 = new DescontoGamer();
+		Desconto d1 = new DescontoValorAlto();
 		Desconto d2 = new DescontoValorAlto();
 		Desconto d3 = new DescontoGrandeQuantidade();
 		Desconto d4 = new DescontoProdutoValorAlto();
