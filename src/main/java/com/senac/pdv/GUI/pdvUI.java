@@ -33,6 +33,7 @@ import java.util.regex.Pattern;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
+import java.util.Locale;
 /**
  *
  * @author ewerson.mssilva
@@ -939,13 +940,13 @@ public class pdvUI extends javax.swing.JFrame {
                 int id = 10;
                 
                 String getValueValor = jTextFieldlVendasValor.getText();
-                double valor = Double.parseDouble(getValueValor);
+                double valor = preco + Double.parseDouble(getValueValor);
                 
-		Venda venda = new Venda();            
+		Venda venda = new Venda();
 
 		Produto p1 = new Produto();
 		p1.setId(id);
-		p1.setPreco(preco + valor);
+		p1.setPreco(valor);
 		venda.adicionarProduto(p1);
 
 		venda.setImposto(new ICMSSP());
@@ -957,7 +958,8 @@ public class pdvUI extends javax.swing.JFrame {
                 
                
         // Insere os valores nos campos Valor, Impostos, Descontos e Valor Total 
-            DecimalFormat decimalFormat = new DecimalFormat("#,##0.00");
+            Locale.setDefault(Locale.US);
+            DecimalFormat decimalFormat = new DecimalFormat("#,##0.00");            
             decimalFormat.setRoundingMode(RoundingMode.UP);
             jTextFieldlVendasValor.setText(decimalFormat.format(Double. parseDouble(ValoresSeparados[0])));
             jTextFieldlVendasImpostos.setText(decimalFormat.format(Double. parseDouble(ValoresSeparados[1])));
