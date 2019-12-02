@@ -911,7 +911,7 @@ public class pdvUI extends javax.swing.JFrame {
 
         for (Produto produto : pdao.readForId(valorID)) {
             preco = produto.getPreco();
-            while (ADDquantidade > produto.getId()){
+            while (ADDquantidade > produto.getQuantidade()){
                 ADDquantidade = Integer.parseInt(JOptionPane.showInputDialog("Quantidade maior que o estoque, Digite a quantidade"));
             };
             modelo.addRow(new Object[]{
@@ -981,6 +981,7 @@ public class pdvUI extends javax.swing.JFrame {
             
             for(int i=0;i<row;i++){        
                     produto.setId(IdVenda); // retorna o valor da celula linha X 0
+                    produto.setId_Produto((Integer) jTableVendas.getValueAt(i,0)); // retorna o valor da celula linha X 0
                     produto.setNome(jTableVendas.getValueAt(i,1).toString()); // retorna o valor da celula linha X 0
                     produto.setQuantidade((Integer) jTableVendas.getValueAt(i,2)); // retorna o valor da celula linha X 0
                     produto.setPreco((Double) jTableVendas.getValueAt(i,3)); // retorna o valor da celula linha X 0

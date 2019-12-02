@@ -271,12 +271,13 @@ public class ProdutoDAO {
             PreparedStatement stmt = null;
 
             try {
-                stmt = con.prepareStatement("INSERT INTO `vendas`(`id`, `nome`, `qtd`, `preco`, `desc`) VALUES (?,?,?,?,?)");
+                stmt = con.prepareStatement("INSERT INTO `vendas`(`id`, `id_produto`,`nome`, `qtd`, `preco`, `desc`) VALUES (?,?,?,?,?,?)");
                 stmt.setInt(1, p.getId());
-                stmt.setString(2, p.getNome());
-                stmt.setInt(3, p.getQuantidade());
-                stmt.setDouble(4, p.getPreco());
-                stmt.setInt(5, p.getDesconto());
+                stmt.setInt(2, p.getId_Produto());
+                stmt.setString(3, p.getNome());
+                stmt.setInt(4, p.getQuantidade());
+                stmt.setDouble(5, p.getPreco());
+                stmt.setInt(6, p.getDesconto());
 
                 stmt.executeUpdate();
 

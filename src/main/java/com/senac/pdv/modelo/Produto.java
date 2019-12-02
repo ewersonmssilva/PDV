@@ -5,6 +5,7 @@ import java.util.List;
 public class Produto {
 	
 	private Integer id;
+        private Integer id_produto;
 	private String nome;
 	private Double valor;
 	private Integer quantidade;
@@ -19,6 +20,14 @@ public class Produto {
 		this.id = id;
 	}
 
+	public Integer getId_Produto() {
+		return id_produto;
+	}
+
+	public void setId_Produto(Integer id_produto) {
+		this.id_produto = id_produto;
+	}        
+        
 	public String getNome() {
 		return nome;
 	}
@@ -64,7 +73,9 @@ public class Produto {
 		return getId() +
 				";" + getNome() +
 				";" + getPreco() +
-				";" + getQuantidade();
+				";" + getQuantidade() +
+                                ";" + getId_Produto();
+                                
                 
 	/*	return new StringBuffer()
 				.append(String.format("\nCodigo: %s", getId()))
