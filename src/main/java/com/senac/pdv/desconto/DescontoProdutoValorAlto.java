@@ -7,7 +7,7 @@ public class DescontoProdutoValorAlto extends Desconto {
 
 	@Override
 	public double getPreco(Venda venda) {
-		if (venda.produtoValorMaior(3000)) {
+		if (venda.produtoValorMaior(100)) {
 			return venda.calcularValorProdutos()*0.05;
 		}
 		return proximo.getPreco(venda);

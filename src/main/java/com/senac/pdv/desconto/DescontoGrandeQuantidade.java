@@ -7,7 +7,7 @@ public class DescontoGrandeQuantidade extends Desconto {
 
 	public double getPreco(Venda venda) {
 		if(venda.quantidadeProdutos() > 5) {
-			return venda.calcularValorProdutos()*0.1;
+			return venda.calcularValorProdutos()*0.25;
 		}
 		return proximo.getPreco(venda);
 	}

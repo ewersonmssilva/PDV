@@ -75,17 +75,5 @@ public class Produto {
 				";" + getPreco() +
 				";" + getQuantidade() +
                                 ";" + getId_Produto();
-                                
-                
-	/*	return new StringBuffer()
-				.append(String.format("\nCodigo: %s", getId()))
-				.append(String.format("\nNome: %s", getNome()))
-				.append(String.format("\nValor: %s", getPreco()))
-				.append(String.format("\nQuantidade: %s", getQuantidade()))
-				.toString();    */
 	}
-
-   // public void getId(List<Produto> readForDesc) {
-    //    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-   // }
 }
