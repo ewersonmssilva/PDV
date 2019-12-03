@@ -15,8 +15,6 @@ public class DescontoProdutoValorAlto extends Desconto {
 
 	@Override
 	public void setProximo(Desconto proximo) {
-		this.proximo = proximo;
-		
+		this.proximo = proximo;		
 	}
-
 }

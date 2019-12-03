@@ -455,6 +455,11 @@ public class pdvUI extends javax.swing.JFrame {
 
         buttonGroup1.add(jRadioButton4);
         jRadioButton4.setText("Desconto 10%");
+        jRadioButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButton4ActionPerformed(evt);
+            }
+        });
 
         jTextFieldlVendasValor.setText("0.00");
         jTextFieldlVendasValor.addActionListener(new java.awt.event.ActionListener() {
@@ -962,15 +967,15 @@ public class pdvUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextFieldlVendasDescontosActionPerformed
 
     private void jRadioButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton3ActionPerformed
-        // TODO add your handling code here:
+        calculaValores(0.0);
     }//GEN-LAST:event_jRadioButton3ActionPerformed
 
     private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
-        // TODO add your handling code here:
+        calculaValores(0.0);
     }//GEN-LAST:event_jRadioButton2ActionPerformed
 
     private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
-        // TODO add your handling code here:
+        calculaValores(0.0);
     }//GEN-LAST:event_jRadioButton1ActionPerformed
 
     @SuppressWarnings("empty-statement")
@@ -1063,8 +1068,12 @@ public class pdvUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextFieldlVendasValorActionPerformed
 
     private void jRadioButton1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jRadioButton1StateChanged
-                // TODO add your handling code here:
+       
     }//GEN-LAST:event_jRadioButton1StateChanged
+
+    private void jRadioButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton4ActionPerformed
+        calculaValores(0.0);
+    }//GEN-LAST:event_jRadioButton4ActionPerformed
 
     /**
      * @param args the command line arguments

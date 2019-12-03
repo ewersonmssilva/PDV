@@ -7,7 +7,7 @@ public class Desconto_5 extends Desconto {
 
 	@Override
 	public double getPreco(Venda venda) {
-		return venda.calcularValorProdutos()*0.10;		
+		return venda.calcularValorProdutos()*0.05;		
 	}
         
         @Override
